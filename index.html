@@ -124,7 +124,11 @@
       color: var(--muted);
       font-size: 0.9rem;
     }
-
+    a.project-title:hover,
+    a.open-source-title:hover {
+      color: var(--purple);
+      transition: color 0.3s ease;
+    }    
     .project-status {
       font-size: 0.85rem;
       color: var(--muted);
@@ -172,19 +176,23 @@
   </section>
 
   <section>
+    <div class="section-title">Artistic Wanderings</div>
+  </section>
+
+  <section>
     <div class="section-title">Projects</div>
 
     <div class="year">Completed</div>
     <div class="project">
-      <span class="project-title">Wine Quality Prediction (ML)</span>
+      <a href="https://github.com/saadk985/Wine_Quality" class="project-title" target="_blank">Wine Quality</a>
       <span class="project-status">(2025)</span>
     </div>
     <div class="project">
-      <span class="project-title">Recipe Recommender</span>
+      <a href="https://github.com/saadk985/Recipe-Recommender" class="project-title" target="_blank">Recipe Recommender</a>
       <span class="project-status">(2025)</span>
     </div>
     <div class="project">
-      <span class="project-title">Genetic Algorithms</span>
+      <a href="https://github.com/saadk985/Genetic_Algorithms" class="project-title" target="_blank">Genetic Algorithms</a>
       <span class="project-status">(2025)</span>
     </div>
     <div class="year">In Progress</div>
@@ -193,7 +201,7 @@
   <section>
     <div class="section-title">Open Source Contributions</div>
     <div class="project">
-      <span class="project-title">Fierce States</span>
+      <a href="https://github.com/saadk985/MSMB_Jupyter-format" class="project-title" target="_blank">Fierce States</a>
       <span class="project-status">(Ongoing)</span>
     </div>
   </section>
