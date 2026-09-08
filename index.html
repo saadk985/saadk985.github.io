@@ -46,6 +46,24 @@
             text-decoration: none;
         }
 
+        .nav-list li.has-tag {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .nav-list li.has-tag a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            /* Keep the same styling as other nav links */
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            padding: 0.2rem 0;
+            transition: color 0.2s;
+        }
         .nav-tag {
             display: inline-block;
             margin-left: 6px;
