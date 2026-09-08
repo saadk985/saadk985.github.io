@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About - M. Saad Khan</title>
+    <style>
+        /* ── CSS Variables ── */
+        :root {
+            --text-main: #333333;
+            --text-muted: #666666;
+            --text-light: #999999;
+            --bg-main: #ffffff;
+            --border-color: #eaeaea;
+            --accent-orange: #fb7e4a;
+            --accent-bg: #f5f5f5;
+            --font-serif: "Georgia", "Times New Roman", serif;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: "Menlo", "Consolas", "Courier New", monospace;
+        }
+
+        body.dark-mode {
+            --text-main: #e5e5e5;
+            --text-muted: #a3a3a3;
+            --text-light: #737373;
+            --bg-main: #121212;
+            --border-color: #2e2e2e;
+            --accent-bg: #1e1e1e;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-serif);
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            z-index: 1;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* ── ANIMATION CANVAS ── */
+        #gameCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            display: block;
+        }
+
+        /* ── Layout ── */
+        .container {
+            display: flex;
+            max-width: 900px;
+            margin: 3.5rem auto 4.5rem auto;
+            padding: 0 2rem;
+            gap: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .sidebar {
+            width: 180px;
+            flex-shrink: 0;
+        }
+
+        .site-title {
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1rem 0;
+        }
+        .nav-list li {
+            margin-bottom: 0.5rem;
+        }
+        .nav-list a {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            display: inline-block;
+            padding: 0.2rem 0;
+        }
+        .nav-list a:hover {
+            color: var(--text-main);
+        }
+        .active-link {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            color: var(--text-main) !important;
+        }
+        .nav-icon {
+            font-size: 0.8em;
+            margin-left: 3px;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 2rem 0;
+        }
+
+        .toggle-light {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem 0;
+            font-family: inherit;
+            margin-top: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            max-width: 650px;
+        }
+
+        /* Mobile site title – hidden on desktop */
+        .mobile-site-title {
+            display: none;
+        }
+
+        .prose {
+            margin-bottom: 5rem;
+        }
+        .prose p {
+            font-size: 1.05rem;
+            color: var(--text-main);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        .prose a {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            color: var(--text-main);
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            color: var(--text-light);
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-footer-links {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        .contact-footer-links a {
+            padding: 0.2rem 0;
+        }
+        .contact-footer-links a:hover {
+            color: var(--text-main);
+        }
+
+        /* ── HAMBURGER MENU BUTTON ── */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            position: fixed;
+            z-index: 100;
+            transition: none;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: var(--text-main);
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform-origin: center;
+        }
+
+        .sidebar-open .hamburger span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .sidebar-open .hamburger span:nth-child(2) {
+            opacity: 0;
+        }
+        .sidebar-open .hamburger span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* ── OVERLAY FOR SIDEBAR ── */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.4);
+            z-index: 49;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* ── MOBILE SIDEBAR BEHAVIOUR ── */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 2rem;
+                margin: 2rem auto;
+                padding: 0 1.5rem;
+            }
+
+            .sidebar .site-title {
+                display: none;
+            }
+
+            .mobile-site-title {
+                display: block;
+                text-align: center;
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
+                padding-right: 3.5rem;
+                padding-left: 1rem;
+            }
+            .mobile-site-title a {
+                color: var(--text-muted);
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 250px;
+                height: 100vh;
+                background: var(--bg-main);
+                padding: 2rem 1.5rem;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+                z-index: 50;
+                overflow-y: auto;
+                border-right: 1px solid var(--border-color);
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar-open .sidebar {
+                transform: translateX(0);
+            }
+
+            .hamburger {
+                display: flex;
+                right: 1.5rem;
+                top: 2.6rem;
+            }
+
+            .sidebar-open .hamburger {
+                right: 1.5rem !important;
+                top: 2.6rem !important;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+                opacity: 1;
+            }
+
+            /* Hide contact footer links? Not needed - keep them */
+            .contact-footer-links {
+                justify-content: flex-start;
+            }
+
+            .main-content {
+                max-width: 100%;
+                padding-top: 0.5rem;
+            }
+
+            .prose p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+            .mobile-site-title {
+                font-size: 1.05rem;
+                padding-right: 3rem;
+                padding-left: 0.5rem;
+            }
+            .nav-list a {
+                font-size: 0.9rem;
+            }
+            .toggle-light {
+                font-size: 0.9rem;
+            }
+            .prose p {
+                font-size: 0.95rem;
+            }
+            .contact-footer-links {
+                font-size: 0.85rem;
+                gap: 1rem;
+            }
+            .hamburger {
+                right: 1rem;
+                top: 2.2rem;
+            }
+            .sidebar-open .hamburger {
+                right: 1rem !important;
+                top: 2.2rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HAMBURGER MENU BUTTON -->
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- OVERLAY (click to close sidebar) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ── FULL‑SCREEN CANVAS ── -->
+    <canvas id="gameCanvas"></canvas>
+
+    <div class="container">
+        <!-- LEFT SIDEBAR -->
+        <nav class="sidebar" id="sidebar">
+            <div class="site-title"><a href="index.html">M. Saad Khan</a></div>
+
+            <ul class="nav-list">
+                <li><a href="about.html" class="active-link">About</a></li>
+                <li><a href="field_notes.html">Field Notes</a></li>
+                <li><a href="#">Longreads</a></li>
+                <li><a href="#">Research</a></li>
+                <li><a href="#">Read Picks</a></li>
+                <li><a href="#">Useful Bookmarks</a></li>
+                <li><a href="#">Book <span class="nav-icon">↗</span></a></li>
+                <li><a href="#">Course <span class="nav-icon">↗</span></a></li>
+            </ul>
+
+            <hr class="divider" />
+
+            <ul class="nav-list">
+                <li><a href="#">Twitter / X</a></li>
+                <li><a href="#">LinkedIn</a></li>
+                <li><a href="#">Substack</a></li>
+                <li><a href="#">Email</a></li>
+            </ul>
+
+            <button class="toggle-light">
+                <span>☾</span> Toggle Light
+            </button>
+        </nav>
+
+        <!-- RIGHT MAIN CONTENT -->
+        <main class="main-content">
+
+            <!-- Mobile home button -->
+            <div class="mobile-site-title"><a href="index.html">M. Saad Khan</a></div>
+
+            <div class="prose">
+                <p>My name is M. Saad Khan. I'm a biotechnologist, self-taught developer, and researcher. My favorite thing to do is solve complex problems at the intersection of biology and computer science: data analysis, machine learning, and precision medicine. If I can ever be helpful to you, please email or connect.</p>
+
+                <p>Current: Transitioning into software engineering and building computational tools for the life sciences.</p>
+
+                <p>Previous: Completed my BS in Biotechnology in Pakistan. During my studies, I focused heavily on understanding deep biological systems, which ultimately led me to discover the power of translating those mechanics into code.</p>
+
+                <p>I am currently navigating a bridge year, expanding my <a href="#">computational biology</a> skill set to transition into technical roles that require both a rigorous life science background and robust programming abilities.</p>
+
+                <p>School: BS in Biotechnology from [Insert Your University Name].</p>
+
+                <p>Email: [Insert your email address] [at] gmail.com</p>
+
+                <p>Interests: Machine Learning / Precision Medicine / Deep Learning / Open Source</p>
+            </div>
+
+            <div class="section-label">CONTACT</div>
+
+            <div class="contact-footer-links">
+                <a href="#">Email</a>
+                <a href="#">Twitter / X</a>
+                <a href="#">LinkedIn</a>
+                <a href="#">GitHub</a>
+                <a href="#">Resume</a>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ── TOGGLE SCRIPT ── -->
+    <script>
+        const toggleBtn = document.querySelector('.toggle-light');
+        const body = document.body;
+
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            toggleBtn.innerHTML = '<span>☀</span> Toggle Dark';
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                toggleBtn.innerHTML = '<span>☀</span> Toggle Dark';
+            } else {
+                localStorage.setItem('theme', 'light');
+                toggleBtn.innerHTML = '<span>☾</span> Toggle Light';
+            }
+        });
+    </script>
+
+    <!-- ── HAMBURGER MENU SCRIPT ── -->
+    <script>
+        const hamburger = document.getElementById('hamburgerBtn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+
+        function toggleSidebar(open) {
+            if (open === undefined) {
+                body.classList.toggle('sidebar-open');
+            } else if (open) {
+                body.classList.add('sidebar-open');
+            } else {
+                body.classList.remove('sidebar-open');
+            }
+        }
+
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleSidebar();
+        });
+
+        overlay.addEventListener('click', () => {
+            toggleSidebar(false);
+        });
+
+        sidebar.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    toggleSidebar(false);
+                }
+            });
+        });
+    </script>
+
+    <!-- ── ANIMATION SCRIPT (left side only, 20% width, maxCap 27) ── -->
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        function getLeftWidth() {
+            const w = window.innerWidth * 0.20;
+            return Math.min(Math.max(w, 160), 400);
+        }
+        let leftWidth = getLeftWidth();
+
+        let bgColor, watermarkRGB;
+        const tealRGB = '0, 139, 139';
+
+        function updateColors() {
+            if (document.body.classList.contains('dark-mode')) {
+                bgColor = '#121212';
+                watermarkRGB = '255, 255, 255';
+            } else {
+                bgColor = '#ffffff';
+                watermarkRGB = '0, 0, 0';
+            }
+        }
+        updateColors();
+
+        toggleBtn.addEventListener('click', updateColors);
+
+        function drawBackground() {
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(0, 0, leftWidth, canvas.height);
+            ctx.fillStyle = `rgba(${watermarkRGB}, 0.10)`;
+            const gridSize = 10;
+            for (let x = 0; x < leftWidth; x += gridSize) {
+                for (let y = 0; y < canvas.height; y += gridSize) {
+                    ctx.fillRect(x - 1, y - 1, 2, 2);
+                }
+            }
+        }
+
+        class RoboticDot {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.step = 10;
+                this.size = 3;
+                this.dir = Math.floor(Math.random() * 4);
+                this.move_timer = 0;
+                this.is_dying = false;
+                this.death_opacity = 1.0;
+                this.startDying = collapseTime + Math.random() * 800;
+            }
+
+            update() {
+                if (this.is_dying) {
+                    this.death_opacity -= 0.01;
+                    if (this.death_opacity <= 0) return true;
+                } else {
+                    this.move_timer++;
+                    if (this.move_timer >= 10) {
+                        this.move_timer = 0;
+                        if (Math.random() < 0.03) {
+                            this.dir = (this.dir + (Math.random() < 0.5 ? 1 : 3)) % 4;
+                        }
+                        if (this.dir === 0) this.y -= this.step;
+                        else if (this.dir === 1) this.x += this.step;
+                        else if (this.dir === 2) this.y += this.step;
+                        else if (this.dir === 3) this.x -= this.step;
+                        if (this.x > leftWidth) this.x = 0;
+                        if (this.x < 0) this.x = leftWidth;
+                        if (this.y > canvas.height) this.y = 0;
+                        if (this.y < 0) this.y = canvas.height;
+                    }
+                }
+                return false;
+            }
+
+            draw() {
+                const alpha = this.is_dying ? this.death_opacity : 1.0;
+                ctx.fillStyle = `rgba(${tealRGB}, ${alpha})`;
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+            }
+        }
+
+        let dots = [];
+        let globalTime = 0;
+        const collapseTime = 2000;
+        const maxCap = 27;
+
+        for (let i = 0; i < 12; i++) {
+            dots.push(new RoboticDot(
+                Math.random() * leftWidth,
+                Math.random() * canvas.height
+            ));
+        }
+
+        function animate() {
+            globalTime++;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(0, 0, leftWidth, canvas.height);
+            ctx.clip();
+            drawBackground();
+
+            if (globalTime < collapseTime) {
+                for (let i = dots.length - 1; i >= 0; i--) {
+                    const dead = dots[i].update();
+                    dots[i].draw();
+                    if (dots.length < maxCap && Math.random() < 0.005) {
+                        dots.push(new RoboticDot(dots[i].x, dots[i].y));
+                    }
+                    if (dead) dots.splice(i, 1);
+                }
+            } else {
+                for (let i = dots.length - 1; i >= 0; i--) {
+                    const dot = dots[i];
+                    if (globalTime > dot.startDying) {
+                        dot.is_dying = true;
+                    }
+                    const dead = dot.update();
+                    dot.draw();
+                    if (dead) dots.splice(i, 1);
+                }
+                if (dots.length === 0) {
+                    globalTime = 0;
+                    for (let i = 0; i < 12; i++) {
+                        dots.push(new RoboticDot(
+                            Math.random() * leftWidth,
+                            Math.random() * canvas.height
+                        ));
+                    }
+                }
+            }
+            ctx.restore();
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            leftWidth = getLeftWidth();
+            for (const dot of dots) {
+                if (dot.x > leftWidth) dot.x = leftWidth * 0.95;
+                if (dot.y > canvas.height) dot.y = canvas.height * 0.95;
+            }
+        });
+    </script>
+
+</body>
+</html>
