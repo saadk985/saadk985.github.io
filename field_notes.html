@@ -46,6 +46,13 @@
             text-decoration: none;
         }
 
+        .nav-list li.has-tag a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        
         /* ── ANIMATION CANVAS ── */
         #gameCanvas {
             position: fixed;
@@ -419,8 +426,8 @@
                 <li><a href="#">Research</a></li>
                 <li><a href="#">Read Picks</a></li>
                 <li><a href="#">Useful Bookmarks</a></li>
-                <li><a href="#">Book <span class="nav-icon">↗</span></a></li>
-                <li><a href="#">Course <span class="nav-icon">↗</span></a></li>
+                <li class="has-tag"><a href="#"><span>Book <span class="nav-icon">↗</span></span><span class="nav-tag">soon</span></a></li>
+                <li class="has-tag"><a href="#"><span>Course <span class="nav-icon">↗</span></span><span class="nav-tag">soon</span></a></li>
             </ul>
 
             <hr class="divider" />
