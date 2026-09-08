@@ -493,7 +493,8 @@
 
         function getLeftWidth() {
             const w = window.innerWidth * 0.20;
-            return Math.min(Math.max(w, 160), 400);
+            const minWidth = Math.max(160, window.innerWidth * 0.10); // at least 10% of viewport
+             return Math.min(Math.max(w, minWidth), 400);
         }
         let leftWidth = getLeftWidth();
 
