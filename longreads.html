@@ -57,13 +57,14 @@
             border-radius: 2px;
             line-height: 1.4;
         }
-
+        
         .nav-list li.has-tag a {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
         }
+        
         /* ── ANIMATION CANVAS ── */
         #gameCanvas {
             position: fixed;
@@ -158,43 +159,71 @@
             display: none;
         }
 
-        .prose {
-            margin-bottom: 5rem;
-        }
-        .prose p {
-            font-size: 1.05rem;
-            color: var(--text-main);
-            margin-bottom: 2rem;
-            line-height: 1.7;
-        }
-        .prose a {
-            text-decoration: underline;
-            text-underline-offset: 3px;
-            color: var(--text-main);
-        }
-
         .section-label {
             font-family: var(--font-mono);
             font-size: 0.75rem;
             letter-spacing: 0.15em;
             color: var(--text-light);
             text-transform: uppercase;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
         }
 
-        .contact-footer-links {
+        .article-list {
             display: flex;
+            flex-direction: column;
             gap: 1.5rem;
-            font-size: 0.95rem;
-            color: var(--text-muted);
             margin-bottom: 3rem;
+        }
+
+        .article-item {
+            display: flex;
+            align-items: baseline;
+            gap: 1.5rem;
             flex-wrap: wrap;
         }
-        .contact-footer-links a {
-            padding: 0.2rem 0;
+
+        .article-date {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            width: 85px;
+            flex-shrink: 0;
         }
-        .contact-footer-links a:hover {
+
+        .article-title {
+            font-size: 1.05rem;
             color: var(--text-main);
+            flex-grow: 1;
+        }
+
+        .article-title:hover {
+            text-decoration: none;
+        }
+
+        .article-item:hover {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.2rem;
+        }
+
+        .article-tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+            padding: 0.15rem 0.4rem;
+            border-radius: 2px;
+        }
+
+        .site-footer {
+            margin-top: 4.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         /* ── HAMBURGER MENU BUTTON ── */
@@ -313,8 +342,13 @@
                 opacity: 1;
             }
 
-            /* Hide contact footer links? Not needed - keep them */
-            .contact-footer-links {
+            /* Hide article tags on mobile */
+            .article-tag {
+                display: none;
+            }
+
+            /* Footer left aligned */
+            .site-footer {
                 justify-content: flex-start;
             }
 
@@ -323,8 +357,18 @@
                 padding-top: 0.5rem;
             }
 
-            .prose p {
+            .article-item {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            .article-title {
+                width: 100%;
+                order: 3;
                 font-size: 1rem;
+            }
+            .article-date {
+                width: 70px;
+                font-size: 0.8rem;
             }
         }
 
@@ -343,12 +387,18 @@
             .toggle-light {
                 font-size: 0.9rem;
             }
-            .prose p {
+            .article-title {
                 font-size: 0.95rem;
             }
-            .contact-footer-links {
-                font-size: 0.85rem;
-                gap: 1rem;
+            .article-date {
+                width: 60px;
+                font-size: 0.75rem;
+            }
+            .site-footer {
+                font-size: 0.75rem;
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
             }
             .hamburger {
                 right: 1rem;
@@ -384,7 +434,7 @@
             <ul class="nav-list">
                 <li><a href="about.html">About</a></li>
                 <li><a href="field_notes.html">Field Notes</a></li>
-                <li><a href="longreads.html" class="active-link">Longreads</a></li>
+                <li><a href="longreads.html"class="active-link">Longreads</a></li>
                 <li><a href="research.html">Research</a></li>
                 <li><a href="read_picks.html">Read Picks</a></li>
                 <li><a href="bookmarks.html">Useful Bookmarks</a></li>
@@ -412,32 +462,24 @@
             <!-- Mobile home button -->
             <div class="mobile-site-title"><a href="index.html">M. Saad Khan</a></div>
 
-            <div class="prose">
-                <p>My name is M. Saad Khan. I'm a biotechnologist, self-taught developer, and researcher. My favorite thing to do is solve complex problems at the intersection of biology and computer science: data analysis, machine learning, and precision medicine. If I can ever be helpful to you, please email or connect.</p>
+            <div class="section-label">Field Notes</div>
 
-                <p>Current: Transitioning into software engineering and building computational tools for the life sciences.</p>
-
-                <p>Previous: Completed my BS in Biotechnology in Pakistan. During my studies, 
-                    I focused heavily on understanding deep biological systems, which ultimately led me to discover the power of translating those mechanics into code.</p>
-
-                <p>I am currently navigating a bridge year, expanding my <a href="#">computational biology</a> skill set to transition into technical roles that require both a rigorous life science background and robust programming abilities.</p>
-
-                <p>School: BS in Biotechnology from [Insert Your University Name].</p>
-
-                <p>Email: [Insert your email address] [at] gmail.com</p>
-
-                <p>Interests: Machine Learning / Precision Medicine / Deep Learning / Open Source</p>
+            <div class="article-list">
+                <div class="article-item">
+                    <div class="article-date">2026.06.30</div>
+                    <a href="#" class="article-title">Synthetic Cell Eats, Grows, Divides</a>
+                    <div class="article-tag">essay</div>
+                </div>
+                <div class="article-item">
+                    <div class="article-date">2026.06.30</div>
+                    <a href="#" class="article-title">Another interesting piece</a>
+                    <div class="article-tag">Longreads</div>
+                </div>
             </div>
 
-            <div class="section-label">CONTACT</div>
-
-            <div class="contact-footer-links">
-                <a href="#">Email</a>
-                <a href="#">Twitter / X</a>
-                <a href="#">LinkedIn</a>
-                <a href="#">GitHub</a>
-                <a href="#">Resume</a>
-            </div>
+            <footer class="site-footer">
+                <div>&copy; 2026 M. Saad Khan</div>
+            </footer>
 
         </main>
     </div>
