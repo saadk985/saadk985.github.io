@@ -398,7 +398,7 @@
             </ul>
 
             <button class="toggle-light">
-                <span>☾</span> Toggle Light
+                <span>☾</span> Toggle Dark
             </button>
         </nav>
 
@@ -414,11 +414,51 @@
                 <p>This section is all about listing down all the amazing websites, youtube channels which I found helpful. This list includes but not limited to learning resources, useful tools, and other such cool stuff that deserves attention. I'm initially adding few bookmarks but that list will continue to get its update frequenctly.</p>
 
                 <ul>
+                    <li><a href="about.html">LabXchange</a></li>
+                    <li><a href="about.html">MIT OCW</a></li>
+                    <li><a href="about.html">Standford Courses Collection in GitHub Repo</a></li>
+                    <li><a href="https://ezgif.com/">Ezgif</a></li>
+                    <li><a href="https://informatics.fas.harvard.edu/resources/">Harvard FAS Informatics Group</a></li>
+                    <li><a href="https://daringfireball.net/projects/markdown/">Markdown</a></li>
+                    <li><a href="https://github.com/danielecook/Awesome-Bioinformatics">Bioinformatics Softwares & Libraries Collection.</a></li>
+                    <li><a href="https://datacarpentry.org/lessons/#genomics">Data Carpentry</a></li>
+                    <li><a href="about.html">Notion</a></li>
+                    <li><a href="about.html">Y Combinator</a></li>
+                    <li><a href="about.html">PhD Paths</a></li>
+                    <li><a href="about.html">R2D3</a></li>
+                    <li><a href="about.html">3blue1brown</a></li>
+                    <li><a href="https://www.data-to-viz.com/">From Data to Viz</a></li>
                     <li><a href="about.html">About</a></li>
-                    <li>Fourty Rules of Love by Elif Shafak</li>
-                    <li>The Picture of Dorian Gray by Oscar Wilde</li>
-                    <li>Ulysses by James Joyce</li>
-                    <li>The Unabridged Journals of Syliva Plath</li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="about.html">About</a></li>
                 </ul>
 
             <footer class="site-footer">
@@ -434,17 +474,17 @@
 
         if (localStorage.getItem('theme') === 'dark') {
             body.classList.add('dark-mode');
-            toggleBtn.innerHTML = '<span>☀</span> Toggle Dark';
+            toggleBtn.innerHTML = '<span>☾</span> Toggle Dark';
         }
 
         toggleBtn.addEventListener('click', () => {
             body.classList.toggle('dark-mode');
             if (body.classList.contains('dark-mode')) {
                 localStorage.setItem('theme', 'dark');
-                toggleBtn.innerHTML = '<span>☀</span> Toggle Dark';
+                toggleBtn.innerHTML = '<span>☀</span> Toggle White';
             } else {
                 localStorage.setItem('theme', 'light');
-                toggleBtn.innerHTML = '<span>☾</span> Toggle Light';
+                toggleBtn.innerHTML = '<span>☾</span> Toggle Dark';
             }
         });
     </script>

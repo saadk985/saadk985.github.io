@@ -574,7 +574,7 @@
             </ul>
 
             <button class="toggle-light">
-                <span>☾</span> Toggle Light
+                <span>☾</span> Toggle Dark
             </button>
         </nav>
 
@@ -611,27 +611,29 @@
     </div>
 
     <!-- SCRIPTS -->
-    <script>
-        // ── TOGGLE LIGHT/DARK ──
-        const toggleBtn = document.querySelector('.toggle-light');
-        const body = document.body;
+   <!-- ── TOGGLE SCRIPT ── -->
+   <script>
+    const toggleBtn = document.querySelector('.toggle-light');
+    const body = document.body;
 
-        if (localStorage.getItem('theme') === 'dark') {
-            body.classList.add('dark-mode');
-            toggleBtn.innerHTML = '<span>☀</span> Toggle Dark';
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        toggleBtn.innerHTML = '<span>☾</span> Toggle Dark';
+    }
+
+    toggleBtn.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        if (body.classList.contains('dark-mode')) {
+            localStorage.setItem('theme', 'dark');
+            toggleBtn.innerHTML = '<span>☀</span> Toggle White';
+        } else {
+            localStorage.setItem('theme', 'light');
+            toggleBtn.innerHTML = '<span>☾</span> Toggle Dark';
         }
+    });
+    </script>
 
-        toggleBtn.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('theme', 'dark');
-                toggleBtn.innerHTML = '<span>☀</span> Toggle Dark';
-            } else {
-                localStorage.setItem('theme', 'light');
-                toggleBtn.innerHTML = '<span>☾</span> Toggle Light';
-            }
-        });
-
+    <script>
         // ── HAMBURGER MENU ──
         const hamburger = document.getElementById('hamburgerBtn');
         const sidebar = document.getElementById('sidebar');
