@@ -182,19 +182,21 @@
             margin-bottom: 2.5rem;
         }
 
-        .contact-footer-links {
+        .site-footer {
+            margin-top: 4.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
             display: flex;
-            gap: 1.5rem;
-            font-size: 0.95rem;
+            justify-content: space-between;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            margin-bottom: 3rem;
             flex-wrap: wrap;
+            gap: 1rem;
         }
-        .contact-footer-links a {
-            padding: 0.2rem 0;
-        }
-        .contact-footer-links a:hover {
-            color: var(--text-main);
+
+        /* Footer left aligned */
+        .site-footer {
+            justify-content: flex-start;
         }
 
         /* ── HAMBURGER MENU BUTTON ── */
@@ -314,10 +316,7 @@
             }
 
             /* Hide contact footer links? Not needed - keep them */
-            .contact-footer-links {
-                justify-content: flex-start;
-            }
-
+         
             .main-content {
                 max-width: 100%;
                 padding-top: 0.5rem;
@@ -346,10 +345,7 @@
             .prose p {
                 font-size: 0.95rem;
             }
-            .contact-footer-links {
-                font-size: 0.85rem;
-                gap: 1rem;
-            }
+
             .hamburger {
                 right: 1rem;
                 top: 2.2rem;

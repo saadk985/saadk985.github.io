@@ -148,6 +148,18 @@
             z-index: 2;
         }
 
+        .site-footer {
+            margin-top: 4.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
         .main-content {
             flex-grow: 1;
             max-width: 650px;
@@ -182,19 +194,21 @@
             margin-bottom: 2.5rem;
         }
 
-        .contact-footer-links {
+        .site-footer {
+            margin-top: 4.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
             display: flex;
-            gap: 1.5rem;
-            font-size: 0.95rem;
+            justify-content: space-between;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            margin-bottom: 3rem;
             flex-wrap: wrap;
+            gap: 1rem;
         }
-        .contact-footer-links a {
-            padding: 0.2rem 0;
-        }
-        .contact-footer-links a:hover {
-            color: var(--text-main);
+
+        /* Footer left aligned */
+        .site-footer {
+            justify-content: flex-start;
         }
 
         /* ── HAMBURGER MENU BUTTON ── */
@@ -433,7 +447,7 @@
                 </ul>
             </div>
 
-            
+
             <footer class="site-footer">
                 <div>&copy; 2026 M. Saad Khan</div>
             </footer>
