@@ -19,6 +19,11 @@
             --font-mono: "Menlo", "Consolas", "Courier New", monospace;
         }
 
+        html {
+            scrollbar-gutter: stable;
+        }
+        
+
         body.dark-mode {
             --text-main: #e5e5e5;
             --text-muted: #a3a3a3;
@@ -108,19 +113,18 @@
         .nav-list {
             list-style: none;
             padding: 0;
-            margin: 0 0 1rem 0;
+            margin: 0 0 0.5rem 0;
         }
-
         .nav-list li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
         }
-
         .nav-list a {
             color: var(--text-muted);
             font-size: 0.95rem;
             transition: color 0.2s;
             display: inline-block;
-            padding: 0.2rem 0;
+            padding: 0.16rem 0;
+            line-height: 1.4;
         }
 
         .nav-list a:hover {
@@ -554,12 +558,13 @@
             <div class="site-title"><a href="index.html">M. Saad Khan</a></div>
             
             <ul class="nav-list">
-                <li><a href="about.html">About</a></li>
+                <li><a href="about">About</a></li>
                 <li><a href="field_notes.html">Field Notes</a></li>
                 <li><a href="longreads.html">Longreads</a></li>
                 <li><a href="research.html">Research</a></li>
                 <li><a href="read_picks.html">Read Picks</a></li>
-                <li><a href="bookmarks.html">Useful Bookmarks</a></li>
+                <li><a href="rabbit-holes.html">Rabbit Holes</a></li>
+                <li class="has-tag"><a href="#"><span>Consultancy </span><span class="nav-tag">soon</span></a></li>
                 <li class="has-tag"><a href="#"><span>Book <span class="nav-icon">↗</span></span><span class="nav-tag">soon</span></a></li>
                 <li class="has-tag"><a href="#"><span>Course <span class="nav-icon">↗</span></span><span class="nav-tag">soon</span></a></li>
             </ul>
