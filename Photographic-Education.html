@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Photographic Education - M. Saad Khan</title>
+    <title>Photographic Education & The Way Out - M. Saad Khan</title>
     <style>
         /* ── CSS Variables ── */
         :root {
@@ -18,6 +18,98 @@
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --font-mono: "Menlo", "Consolas", "Courier New", monospace;
         }
+
+/* ── ARTICLE HEADER ── */
+.article-header {
+    margin-bottom: 3rem;
+}
+
+.article-h1 {
+    font-family: var(--font-serif);
+    font-size: 1.9rem;
+    font-weight: normal;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--text-main);
+    margin: 0 0 1rem 0;
+}
+
+.article-meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.article-meta .meta-dot {
+    margin: 0 0.5rem;
+    opacity: 0.6;
+}
+
+.article-tension {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    border-left: 2px solid var(--accent-orange);
+    padding-left: 1rem;
+    margin: 0;
+}
+
+.article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+}
+
+.article-tags span {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-light);
+    border: 1px solid var(--border-color);
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    text-transform: lowercase;
+}
+
+.article-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.article-nav a {
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+
+.article-nav a:hover {
+    color: var(--text-main);
+}
+
+.article-nav .nav-index {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+    .article-h1 { font-size: 1.5rem; }
+    .article-tension { font-size: 1.05rem; }
+    .article-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+    }
+}
 
         figure {
             margin: 2rem 0;             /* Removes default 40px browser side margins */
@@ -424,7 +516,6 @@
                 <li><a href="research.html">Research</a></li>
                 <li><a href="read_picks.html">Read Picks</a></li>
                 <li><a href="rabbit-holes.html">Rabbit Holes</a></li>
-                <li><a href="Photographic-Education.html" class="active-link">Photographic Education</a></li>
                 <li class="has-tag"><a href="#"><span>Consultancy </span><span class="nav-tag">soon</span></a></li>
                 <li class="has-tag"><a href="#"><span>Book <span class="nav-icon">↗</span></span><span class="nav-tag">soon</span></a></li>
                 <li class="has-tag"><a href="#"><span>Course <span class="nav-icon">↗</span></span><span class="nav-tag">soon</span></a></li>
@@ -450,7 +541,17 @@
             <!-- Mobile home button -->
             <div class="mobile-site-title"><a href="index.html">M. Saad Khan</a></div>
 
-            <div class="section-label">Photographic Education</div>
+    
+            <!-- ── ARTICLE HEADER ── -->
+        <header class="article-header">
+            <h1 class="article-h1">Photographic Education &amp; The Way Out</h1>
+
+            <div class="article-meta">
+                <span>2026.06.30</span>
+                <span class="meta-dot">·</span>
+                <span>6 min read</span>
+            </div>
+        </header>
 
             <div class="prose">
                 <p>I have always somehow throughout my life wonder about the knowledge I never once used aside from the textbooks. 
@@ -494,6 +595,8 @@
                      we’re used to.</p>
 
             </div>
+
+            <!-- ── ARTICLE FOOTER ── -->
 
             <footer class="site-footer">
                 <div>&copy; 2026 M. Saad Khan</div>
