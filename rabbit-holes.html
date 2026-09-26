@@ -79,7 +79,12 @@
             pointer-events: none;
             display: block;
         }
-
+        /* Hide canvas entirely on mobile */
+        @media (max-width: 768px) {
+            #gameCanvas {
+                display: none;
+            }
+        }
         /* ── Layout ── */
         .container {
             display: flex;
@@ -526,6 +531,13 @@
 
     <!-- ── ANIMATION SCRIPT (left side only, 20% width, maxCap 27) ── -->
     <script>
+                if (window.innerWidth <= 768) {
+            // Mobile: no animation at all
+            document.getElementById('gameCanvas').style.display = 'none';
+        }
+        else {
+        // ... your entire existing animation script goes here ...
+
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
@@ -677,6 +689,7 @@
                 if (dot.y > canvas.height) dot.y = canvas.height * 0.95;
             }
         });
+        }
     </script>
 
 </body>

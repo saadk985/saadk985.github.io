@@ -86,7 +86,12 @@
             z-index: 0;
             pointer-events: none;
         }
-
+/* Hide canvas entirely on mobile */
+        @media (max-width: 768px) {
+            #gameCanvas {
+                display: none;
+            }
+        }
         /* ── LAYOUT ── */
         .container {
             display: flex;
