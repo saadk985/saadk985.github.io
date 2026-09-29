@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Field Notes - M. Saad Khan</title>
+    <title>Gen AI & Expressivity Crisis - M. Saad Khan</title>
     <style>
         /* ── CSS Variables ── */
         :root {
@@ -19,11 +19,138 @@
             --font-mono: "Menlo", "Consolas", "Courier New", monospace;
         }
 
+/* ── ARTICLE HEADER ── */
+.article-header {
+    margin-bottom: 3rem;
+}
+
+.article-h1 {
+    font-family: var(--font-serif);
+    font-size: 1.9rem;
+    font-weight: normal;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--text-main);
+    margin: 0 0 1rem 0;
+}
+
+.article-meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.article-meta .meta-dot {
+    margin: 0 0.5rem;
+    opacity: 0.6;
+}
+
+.article-tension {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    border-left: 2px solid var(--accent-orange);
+    padding-left: 1rem;
+    margin: 0;
+}
+
+.article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+}
+
+.article-tags span {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-light);
+    border: 1px solid var(--border-color);
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    text-transform: lowercase;
+}
+
+.article-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.article-nav a {
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+
+.article-nav a:hover {
+    color: var(--text-main);
+}
+
+.article-nav .nav-index {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+    .article-h1 { font-size: 1.5rem; }
+    .article-tension { font-size: 1.05rem; }
+    .article-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+    }
+}
+
+        figure {
+            margin: 2rem 0;             /* Removes default 40px browser side margins */
+            display: flex;
+            flex-direction: column;
+            align-items: center;        /* Centers child img and figcaption */
+            text-align: center;
+        }
+
+        figure img {
+            max-width: 100%;            /* Prevents image from overflowing right */
+            height: auto;
+            display: block;
+            margin: 0 auto;             /* Centers the image box */
+            border-radius: 4px;
+        }
+
+        figcaption {
+            margin-top: 8px;
+            font-size: 0.875rem;
+            color: #6b6b6b;
+        }
+
+        blockquote.substack-quote {
+            margin: 1.5rem 0;
+            padding: 4px 0 4px 18px;          /* Space between bar and text */
+            border-left: 3px solid #292929;   /* The classic vertical bar */
+            font-style: italic;
+            font-size: 1.15rem;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        blockquote.substack-quote p {
+            margin: 0;
+        }
+
         html {
             scrollbar-gutter: stable;
         }
         
-
         body.dark-mode {
             --text-main: #e5e5e5;
             --text-muted: #a3a3a3;
@@ -62,14 +189,13 @@
             border-radius: 2px;
             line-height: 1.4;
         }
-        
+
         .nav-list li.has-tag a {
             display: flex;
             justify-content: space-between;
             align-items: center;
             width: 100%;
         }
-        
         /* ── ANIMATION CANVAS ── */
         #gameCanvas {
             position: fixed;
@@ -81,13 +207,12 @@
             pointer-events: none;
             display: block;
         }
-
         /* Hide canvas entirely on mobile */
-@media (max-width: 768px) {
-    #gameCanvas {
-        display: none;
-    }
-}
+        @media (max-width: 768px) {
+            #gameCanvas {
+                display: none;
+            }
+        }
         /* ── Layout ── */
         .container {
             display: flex;
@@ -171,59 +296,28 @@
             display: none;
         }
 
+        .prose {
+            margin-bottom: 5rem;
+        }
+        .prose p {
+            font-size: 1.05rem;
+            color: var(--text-main);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        .prose a {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            color: var(--text-main);
+        }
+
         .section-label {
             font-family: var(--font-mono);
             font-size: 0.75rem;
             letter-spacing: 0.15em;
             color: var(--text-light);
             text-transform: uppercase;
-            margin-bottom: 2rem;
-        }
-
-        .article-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-        }
-
-        .article-item {
-            display: flex;
-            align-items: baseline;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .article-date {
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            width: 85px;
-            flex-shrink: 0;
-        }
-
-        .article-title {
-            font-size: 1.05rem;
-            color: var(--text-main);
-            flex-grow: 1;
-        }
-
-        .article-title:hover {
-            text-decoration: none;
-        }
-
-        .article-item:hover {
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.2rem;
-        }
-
-        .article-tag {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--text-light);
-            border: 1px solid var(--border-color);
-            padding: 0.15rem 0.4rem;
-            border-radius: 2px;
+            margin-bottom: 2.5rem;
         }
 
         .site-footer {
@@ -236,6 +330,11 @@
             color: var(--text-muted);
             flex-wrap: wrap;
             gap: 1rem;
+        }
+
+        /* Footer left aligned */
+        .site-footer {
+            justify-content: flex-start;
         }
 
         /* ── HAMBURGER MENU BUTTON ── */
@@ -354,33 +453,15 @@
                 opacity: 1;
             }
 
-            /* Hide article tags on mobile */
-            .article-tag {
-                display: none;
-            }
-
-            /* Footer left aligned */
-            .site-footer {
-                justify-content: flex-start;
-            }
+            /* Hide contact footer links? Not needed - keep them */
 
             .main-content {
                 max-width: 100%;
                 padding-top: 0.5rem;
             }
 
-            .article-item {
-                flex-wrap: wrap;
-                gap: 0.5rem;
-            }
-            .article-title {
-                width: 100%;
-                order: 3;
+            .prose p {
                 font-size: 1rem;
-            }
-            .article-date {
-                width: 70px;
-                font-size: 0.8rem;
             }
         }
 
@@ -399,18 +480,8 @@
             .toggle-light {
                 font-size: 0.9rem;
             }
-            .article-title {
+            .prose p {
                 font-size: 0.95rem;
-            }
-            .article-date {
-                width: 60px;
-                font-size: 0.75rem;
-            }
-            .site-footer {
-                font-size: 0.75rem;
-                flex-direction: column;
-                align-items: flex-start;
-                text-align: left;
             }
             .hamburger {
                 right: 1rem;
@@ -441,15 +512,15 @@
     <div class="container">
         <!-- LEFT SIDEBAR -->
         <nav class="sidebar" id="sidebar">
-            <div class="site-title"><a href="/">M. Saad Khan</a></div>
+            <div class="site-title"><a href="index.html">M. Saad Khan</a></div>
 
             <ul class="nav-list">
-                <li><a href="about">About</a></li>
-                <li><a href="field_notes" class="active-link">Field Notes</a></li>
-                <li><a href="longreads">Longreads</a></li>
-                <li><a href="research">Research</a></li>
-                <li><a href="read_picks">Read Picks</a></li>
-                <li><a href="rabbit-holes">Rabbit Holes</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="field_notes.html">Field Notes</a></li>
+                <li><a href="longreads.html">Longreads</a></li>
+                <li><a href="research.html">Research</a></li>
+                <li><a href="read_picks.html">Read Picks</a></li>
+                <li><a href="rabbit-holes.html">Rabbit Holes</a></li>
                 <li class="has-tag"><a href="#"><span>Consultancy </span><span class="nav-tag">soon</span></a></li>
                 <li class="has-tag"><a href="#"><span>Book <span class="nav-icon">↗</span></span><span class="nav-tag">soon</span></a></li>
                 <li class="has-tag"><a href="#"><span>Course <span class="nav-icon">↗</span></span><span class="nav-tag">soon</span></a></li>
@@ -473,36 +544,42 @@
         <main class="main-content">
 
             <!-- Mobile home button -->
-            <div class="mobile-site-title"><a href="/">M. Saad Khan</a></div>
+            <div class="mobile-site-title"><a href="index.html">M. Saad Khan</a></div>
 
-            <div class="section-label">Field Notes</div>
+    
+            <!-- ── ARTICLE HEADER ── -->
+        <header class="article-header">
+            <h1 class="article-h1">Gen AI & The Expressivity Crisis.</h1>
 
-            <div class="article-list">
-                <div class="article-item">
-                    <div class="article-date">2026.09.12</div>
-                    <a href="Gen-AI" class="article-title">Gen AI & Expressivity Crisis</a>
-                    <div class="article-tag">Feild Notes</div>
-                </div>
+            <div class="article-meta">
+                <span>2026.09.29</span>
+                <span class="meta-dot">·</span>
+                <span>2 min read</span>
             </div>
+        </header>
 
-            <div class="article-list">
-                <div class="article-item">
-                    <div class="article-date">2026.09.12</div>
-                    <a href="Photographic-Education" class="article-title">Photographic Education, and the way out.</a>
-                    <div class="article-tag">Feild Notes</div>
-                </div>
-            </div>
+            <div class="prose">
+                <p>In the book "Sapiens: A Brief History of Mankind", the author puts a specific emphasis on what makes us better than the rest of the species, why we dominated, and became the leading cause of the extinction of hundreds of other species. It is our expressivity, our ability to express things in detail, argue, and do more than standard yes & no instructions. It was a rather rare event that enabled us to speak, and thus made us better at living together as a species. We co-operated better, built trust, bred, built families, and multi-layered institutions. 
+
+                    <figure>
+                    <img src="images/nlp.png" width="600">
+                    <figcaption>Linguistics was a major force for human progress which seems under heavy pressure under the name of so called "productivity."</figcaption>
+                </figure>
+                
+                <p>The very foundation of where we are now was all thanks to our linguistics. Now, imagine the next decade, where our expressivity comes down to zero, and our thought processes are being handled by an NLP machine which generates, generates based on mathematical formulas. The argument I want to present here is not against the machines but rather a better complementarity system. The AI slop all around us is the worst possible use we are abusing NLP with. Present-day readers on the internet have trust issues with the content they are consuming; social media posts and comments are looked at through wary eyes, with people blaming each other for AI slop. A place which was used to connect with others is now a battleground of expressivity dilemma. Expressivity throughout the millennium sparked the discussions in humanity, and that in return promoted collaborations, theories, projects, etc. Now, the text seems to diverge from all those emotions. The content on the internet is photographic text which just tells the truth, but the truth has no foundations. Each and every thought expressed by humans through linguistics: all along the product of a vast, ever-shifting network of billions of neurons shaped over millennia, is being sidelined by a reductive math equation whose parameters barely exceed two trillion with static weights. </p>
+                <p>I'm not in any way a preacher of AI Doom's day or have any skepticism about these models. The main point simply is that the mess these generative AIs are creating is gonna cost us the whole foundations which we are currently standing upon. What you speak, listen, or read, if not by another human, you are losing the only edge as a species you have over others. The current generative-AI boom is quite the opposite of what happened a millennium ago. IMO, we should use AI aggressively, but the medium of communication should not be how we communicate with humans, nor should the response from a model be through linguistics. Just like we communicated with computers through code, keeping the essence of human linguistics intact, we need specific, more sophisticated means to communicate with AI that should not involve the use of human language.</p>
+     </div>
+
+            <!-- ── ARTICLE FOOTER ── -->
 
             <footer class="site-footer">
                 <div>&copy; 2026 M. Saad Khan</div>
             </footer>
-
         </main>
     </div>
 
     <!-- ── TOGGLE SCRIPT ── -->
     <script>
-
         const toggleBtn = document.querySelector('.toggle-light');
         const body = document.body;
 
@@ -559,7 +636,7 @@
 
     <!-- ── ANIMATION SCRIPT (left side only, 20% width, maxCap 27) ── -->
     <script>
-        if (window.innerWidth <= 768) {
+                if (window.innerWidth <= 768) {
             // Mobile: no animation at all
             document.getElementById('gameCanvas').style.display = 'none';
         }
