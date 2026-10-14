@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photographic Education & The Way Out - M. Saad Khan</title>
+    <style>
+        /* ── CSS Variables ── */
+        :root {
+            --text-main: #333333;
+            --text-muted: #666666;
+            --text-light: #999999;
+            --bg-main: #ffffff;
+            --border-color: #eaeaea;
+            --accent-orange: #fb7e4a;
+            --accent-bg: #f5f5f5;
+            --font-serif: "Georgia", "Times New Roman", serif;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: "Menlo", "Consolas", "Courier New", monospace;
+        }
+
+/* ── ARTICLE HEADER ── */
+.article-header {
+    margin-bottom: 3rem;
+}
+
+.article-h1 {
+    font-family: var(--font-serif);
+    font-size: 1.9rem;
+    font-weight: normal;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--text-main);
+    margin: 0 0 1rem 0;
+}
+
+.article-meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.article-meta .meta-dot {
+    margin: 0 0.5rem;
+    opacity: 0.6;
+}
+
+.article-tension {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    border-left: 2px solid var(--accent-orange);
+    padding-left: 1rem;
+    margin: 0;
+}
+
+.article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+}
+
+.article-tags span {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-light);
+    border: 1px solid var(--border-color);
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    text-transform: lowercase;
+}
+
+.article-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.article-nav a {
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+
+.article-nav a:hover {
+    color: var(--text-main);
+}
+
+.article-nav .nav-index {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+    .article-h1 { font-size: 1.5rem; }
+    .article-tension { font-size: 1.05rem; }
+    .article-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+    }
+}
+
+        figure {
+            margin: 2rem 0;             /* Removes default 40px browser side margins */
+            display: flex;
+            flex-direction: column;
+            align-items: center;        /* Centers child img and figcaption */
+            text-align: center;
+        }
+
+        figure img {
+            max-width: 100%;            /* Prevents image from overflowing right */
+            height: auto;
+            display: block;
+            margin: 0 auto;             /* Centers the image box */
+            border-radius: 4px;
+        }
+
+        figcaption {
+            margin-top: 8px;
+            font-size: 0.875rem;
+            color: #6b6b6b;
+        }
+
+        blockquote.substack-quote {
+            margin: 1.5rem 0;
+            padding: 4px 0 4px 18px;          /* Space between bar and text */
+            border-left: 3px solid #292929;   /* The classic vertical bar */
+            font-style: italic;
+            font-size: 1.15rem;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        blockquote.substack-quote p {
+            margin: 0;
+        }
+
+        html {
+            scrollbar-gutter: stable;
+        }
+        
+        body.dark-mode {
+            --text-main: #e5e5e5;
+            --text-muted: #a3a3a3;
+            --text-light: #737373;
+            --bg-main: #121212;
+            --border-color: #2e2e2e;
+            --accent-bg: #1e1e1e;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-serif);
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            z-index: 1;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .nav-tag {
+            display: inline-block;
+            margin-left: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+            padding: 0.1rem 0.4rem;
+            border-radius: 2px;
+            line-height: 1.4;
+        }
+
+        .nav-list li.has-tag a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        /* ── ANIMATION CANVAS ── */
+        #gameCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            display: block;
+        }
+        /* Hide canvas entirely on mobile */
+        @media (max-width: 768px) {
+            #gameCanvas {
+                display: none;
+            }
+        }
+        /* ── Layout ── */
+        .container {
+            display: flex;
+            max-width: 900px;
+            margin: 3.5rem auto 4.5rem auto;
+            padding: 0 2rem;
+            gap: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .sidebar {
+            width: 180px;
+            flex-shrink: 0;
+        }
+
+        .site-title {
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 0.5rem 0;
+        }
+        .nav-list li {
+            margin-bottom: 0.3rem;
+        }
+        .nav-list a {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            display: inline-block;
+            padding: 0.16rem 0;
+            line-height: 1.4;
+        }
+        .nav-list a:hover {
+            color: var(--text-main);
+        }
+        .active-link {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            color: var(--text-main) !important;
+        }
+        .nav-icon {
+            font-size: 0.8em;
+            margin-left: 3px;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 2rem 0;
+        }
+
+        .toggle-light {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem 0;
+            font-family: inherit;
+            margin-top: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            max-width: 650px;
+        }
+
+        /* Mobile site title – hidden on desktop */
+        .mobile-site-title {
+            display: none;
+        }
+
+        .prose {
+            margin-bottom: 5rem;
+        }
+        .prose p {
+            font-size: 1.05rem;
+            color: var(--text-main);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        .prose a {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            color: var(--text-main);
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            color: var(--text-light);
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+        }
+
+        .site-footer {
+            margin-top: 4.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* Footer left aligned */
+        .site-footer {
+            justify-content: flex-start;
+        }
+
+        /* ── HAMBURGER MENU BUTTON ── */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            position: fixed;
+            z-index: 100;
+            transition: none;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: var(--text-main);
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform-origin: center;
+        }
+
+        .sidebar-open .hamburger span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .sidebar-open .hamburger span:nth-child(2) {
+            opacity: 0;
+        }
+        .sidebar-open .hamburger span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* ── OVERLAY FOR SIDEBAR ── */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.4);
+            z-index: 49;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* ── MOBILE SIDEBAR BEHAVIOUR ── */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 2rem;
+                margin: 2rem auto;
+                padding: 0 1.5rem;
+            }
+
+            .sidebar .site-title {
+                display: none;
+            }
+
+            .mobile-site-title {
+                display: block;
+                text-align: center;
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
+                padding-right: 3.5rem;
+                padding-left: 1rem;
+            }
+            .mobile-site-title a {
+                color: var(--text-muted);
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 250px;
+                height: 100vh;
+                background: var(--bg-main);
+                padding: 2rem 1.5rem;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+                z-index: 50;
+                overflow-y: auto;
+                border-right: 1px solid var(--border-color);
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar-open .sidebar {
+                transform: translateX(0);
+            }
+
+            .hamburger {
+                display: flex;
+                right: 1.5rem;
+                top: 2.6rem;
+            }
+
+            .sidebar-open .hamburger {
+                right: 1.5rem !important;
+                top: 2.6rem !important;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+                opacity: 1;
+            }
+
+            /* Hide contact footer links? Not needed - keep them */
+
+            .main-content {
+                max-width: 100%;
+                padding-top: 0.5rem;
+            }
+
+            .prose p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+            .mobile-site-title {
+                font-size: 1.05rem;
+                padding-right: 3rem;
+                padding-left: 0.5rem;
+            }
+            .nav-list a {
+                font-size: 0.9rem;
+            }
+            .toggle-light {
+                font-size: 0.9rem;
+            }
+            .prose p {
+                font-size: 0.95rem;
+            }
+            .hamburger {
+                right: 1rem;
+                top: 2.2rem;
+            }
+            .sidebar-open .hamburger {
+                right: 1rem !important;
+                top: 2.2rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HAMBURGER MENU BUTTON -->
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- OVERLAY (click to close sidebar) -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- ── FULL‑SCREEN CANVAS ── -->
+    <canvas id="gameCanvas"></canvas>
+
+    <div class="container">
+        <!-- LEFT SIDEBAR -->
+        <nav class="sidebar" id="sidebar">
+            <div class="site-title"><a href="index.html">M. Saad Khan</a></div>
+
+            <ul class="nav-list">
+                <li><a href="about.html">About</a></li>
+                <li><a href="field_notes.html">Field Notes</a></li>
+                <li><a href="longreads.html">Longreads</a></li>
+                <li><a href="research.html">Research</a></li>
+                <li><a href="read_picks.html">Read Picks</a></li>
+                <li><a href="rabbit-holes.html">Rabbit Holes</a></li>
+                <li class="has-tag"><a href="#"><span>Consultancy </span><span class="nav-tag">soon</span></a></li>
+                <li class="has-tag"><a href="#"><span>Book <span class="nav-icon">↗</span></span><span class="nav-tag">soon</span></a></li>
+                <li class="has-tag"><a href="#"><span>Course <span class="nav-icon">↗</span></span><span class="nav-tag">soon</span></a></li>
+            </ul>
+
+            <hr class="divider" />
+
+            <ul class="nav-list">
+                <li><a href="https://www.linkedin.com/in/saad985/">LinkedIn <span class="nav-icon">↗</span></a></li>
+                <li><a href="https://substack.com/@saadk985">Substack <span class="nav-icon">↗</span></a></li>
+                <li><a href="mailto:msaadkhn985@gmail.com">Email <span class="nav-icon">↗</span></a></li>
+                <li><a href="https://github.com/saadk985">GitHub <span class="nav-icon">↗</span></a></li>
+            </ul>
+
+            <button class="toggle-light">
+                <span>☾</span> Toggle Dark
+            </button>
+        </nav>
+
+        <!-- RIGHT MAIN CONTENT -->
+        <main class="main-content">
+
+            <!-- Mobile home button -->
+            <div class="mobile-site-title"><a href="index.html">M. Saad Khan</a></div>
+
+    
+            <!-- ── ARTICLE HEADER ── -->
+        <header class="article-header">
+            <h1 class="article-h1">Who Owns a Discovery About You?</h1>
+
+            <div class="article-meta">
+                <span>2026.10.14</span>
+                <span class="meta-dot">·</span>
+                <span>10 min read</span>
+            </div>
+        </header>
+
+            <div class="prose">
+                <p>I like the idea of a personal genome vault. Instead of handing my DNA data to a company and trusting them, I would keep it in storage I control and decide who gets access, for what purpose, and for how long. Self-custody is a familiar idea with money already, and a genome is far more personal than a bank balance. I still think the idea is right. But one thought experiment keeps bothering me, as it points at a gap that no vault can close. More importantly, I've been working for the past couple of months to solve the technical aspects of mainstreaming the genetic data.   
+                    Suppose I give a research team access to my genome for a study of an inherited heart condition. They find a variant responsible for raising the risk of the disease. That matters to me, obviously. It also matters to my siblings, because if the variant runs in the family, each of them may carry it too.
+                    My siblings never joined the study and never signed a consent form. Nobody broke into an account, and my data was used exactly as I allowed. Yet something about my siblings has become easier to know because of a choice I made.</p>
+                
+                <p>This is the part of genetic privacy that is easy to miss: a sample can belong to one person while the consequences of studying it reach other people. My argument here is narrow. Ownership of a genome file is really a bundle of custody rights. Those rights are necessary, and I want people to have far more of them, but they cannot settle who may learn what, who must be told, and who answers when something goes wrong. A platform that gives people control also needs a second layer of governance, one that deals with findings and with people who are not at the table.</p>
+                
+                <figure>
+                    <img src="images/longread_1.png" width="600">
+                    <figcaption>Courtesy: Google</figcaption>
+                </figure>
+                <h3>A genome doesn’t stop at the person who supplied it</h3>   
+                <p>Privacy rules mostly draw lines around individuals. My record is about me, yours is about you, and consent is how each of us decides what happens to our own information. Genomes blur those lines. Relatives share ancestry and, often, specific variants, so a result in one person changes what can reasonably be suspected about another.</p>
+                <p>Clayton, Evans, Hazel and Rothstein, in their review of US genetic privacy law, describe the genome as private and public at the same time: unique to the individual as a whole, yet built from variants widely shared with relatives and with the wider population. They add that the meaning of any one person’s variants only becomes clear by studying many people. [1] That is a real paradox. Researchers need many participants to interpret a variant, and once it is interpreted it can say something about relatives who were never in the study.</p>
+                <p>It helps to be precise about what a finding does. If I carry a variant for a dominant heart condition and inherited it from a parent, each full sibling has roughly a 50% chance of carrying it too. If it arose newly in me, their risk is low. Either way, carrying a variant is not the same as developing the disease, because many variants are incomplete due to recessive/dominant stuff . So a finding shifts the estimated risk for my relatives. It does not reveal their genotype.</p>
+                <p></p>
+                <p>My siblings’ knowledge only changes at step four. Their exposure starts earlier, because once a finding exists, everyone who holds it can reason about them. US law has partly absorbed this: GINA defines genetic information to include the genetic tests of an individual’s family members and the manifestation of disease in them. [1] But GINA’s protections cover health insurance and employment. As of Clayton and colleagues’ 2019 review, no state law stopped insurers from using genetic information in a person’s health records for underwriting, and life, disability and long-term-care insurance sit outside GINA. [1]</p>
+                <p>Consent is a promise about a purpose and a scope. I agree that researchers may study my genome for heart disease, under stated safeguards. What I cannot consent to is the study’s conclusions, because nobody knows them in advance, or the later studies that will build on this one, or anything on behalf of my siblings. Broad consent and dynamic consent, where participants are asked again as projects change, stretch the model, and they are worth building. They still bind only the person who signs.
+                    So “we have consent” is a weak answer to the sibling problem. Consent legitimises the participant’s contribution. It does not settle what is owed to other people affected by what that contribution turns up.</p>
+                <p>Go back to the heart condition. Should I be allowed to keep my result private? Do my siblings have a legitimate interest in learning that a serious risk might run in the family? Telling them could allow early screening and could save a life. It could also reveal things about me, strain relationships, or burden someone who would rather not know. If the evidence is weak, or nothing useful can be done, the case for telling them gets much weaker.
+                    Ethics bodies have not overlooked this. Phillips and colleagues reviewed 35 normative documents on sharing genetic information with relatives. Most accepted disclosure without the patient’s consent in limited circumstances, but the review found that the conditions for doing so were often poorly defined. [2]</p>
+                <p>Some guidance is more specific. The American Society of Human Genetics’ 1998 statement says disclosure should be permissible where attempts to encourage the patient to tell their relatives have failed, the harm is highly likely, serious and foreseeable, the at-risk relatives are identifiable, and the condition is preventable or treatable, or early monitoring reduces the risk. [3] The law is often stricter. In the US, Clayton and colleagues conclude that, outside narrow exceptions, clinicians are neither required nor permitted to inform at-risk relatives without the patient’s consent. [1] And all of this was written with clinical care in mind. A research finding arrives through a study, not a treatment relationship, and returning a participant’s results to relatives has been analysed as its own problem. [4]
+                    I don’t think relatives always have a right to know, and I don’t think a participant’s confidentiality ends the discussion. The answer depends on how reliable the result is, how serious the risk is, whether anything can be done about it, and what the local law allows. Someone has to be responsible for weighing those things case by case. A signed consent form cannot do that.</p>
+                <p>Relatives matter to genetic privacy in a second way, through identification.
+                    In 2013, Gymrek and colleagues showed that surnames could be inferred for some male research participants by matching Y-chromosome markers against public genealogy resources, and that combining the surname with other details could narrow the field to a single person. [5] The lesson was not that every genome can be identified. It was that removing names does not make genomic data anonymous.
+                    That study is about the participants themselves, though. The relative problem works through kinship. In 2018, investigators identified the Golden State Killer by matching crime-scene DNA to the data of distant relatives in a public genealogy database and then tracing the family tree. [1, 6] Erlich and colleagues later estimated that a genealogy database covering only a small fraction of a population is enough to find a third-cousin-or-closer match for most people in it. [7] So someone who has never taken a DNA test can become identifiable because enough of their relatives did.</p>
+                <p>There is a counterweight, and it corrects my own worry a little. Clayton and colleagues note that research settings have not seen a flood of re-identification attempts, partly because institutions have strong incentives to protect data and usually require investigators to promise not to try. [1] The exposure is greatest where identified data from relatives sits in open consumer databases that nobody governs. The risk is real but uneven.
+                    Not every inference is harmful. Matching can reunite relatives, explain a disease risk or sharpen a diagnosis. That is why this is a bigger question than data security. It is not only who can open the file, but what that access makes possible afterwards.</p>
+                <p></p>
+                <p>There are good reasons to move control away from a single company. A private vault gives people a say over access. Clear permissions make the rules visible, and a tamper-evident log records who was allowed to do what. Shabani discusses this promise of distributed stewardship and participatory access control for genomic data sharing. [11]
+                    But those tools manage custody and permissions. They cannot decide whether a finding should reach a relative, whether the evidence is strong enough to act on, or who is liable when a permitted analysis causes harm. A permission can work exactly as designed and still authorise something that deserves scrutiny. A permanent record can show that a decision was made. It cannot show that the decision was fair. Writing sensitive information to a public blockchain may make it impossible to remove later, and even metadata can reveal more than intended if access patterns and identities are linked carelessly. Keeping raw genomes off-chain is necessary, but it is the easy part of the design problem.</p>
+                <p>The WHO’s 2024 guidance on human genome data points in the same direction. Its eight principles include stewardship, transparency and accountability, and they put the rights of individuals and communities side by side. [12]
+                    I still believe people should have far more control over their genetic data than they do now. I just wouldn’t trust a platform because it calls itself decentralized. I would want to know what it does about the problems its technology can’t solve: familial risk, uncertain results, secondary use, requests for disclosure, and responsibility when something goes wrong.</p>
+                <p>Return to my own case. I made a legitimate choice to share my data. The researchers stayed inside the study’s agreed scope. Their finding could help my family, or feed a discovery that helps thousands of people. And still the result reaches past the person who consented.
+                    It would be absurd to conclude that I should never have taken part in research. It would be just as easy, and just as wrong, to say that because I consented, every consequence is settled. My decision matters. It is not the only interest in the story.</p>
+                <p>So who owns a discovery about you? Probably nobody, in the ordinary sense of owner. Participants usually can’t claim property in what is made from their material. Researchers and institutions can hold intellectual property in what they build, but that is not the same as owning the truth about someone’s body or family. Relatives have interests, not ownership. What we can decide is who has a say, who must answer, and who gets told.
+                    We can give people control over who accesses their genome. We cannot promise that what researchers learn from it will concern only them, and a platform that implies otherwise is overselling. The real test of a genetic-data platform is not whether a person holds the key to their genome. It is whether the platform has thought carefully about what happens when that key opens a door onto someone else’s life.</p>
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
+             </div>
+
+            <!-- ── ARTICLE FOOTER ── -->
+
+            <footer class="site-footer">
+                <div>&copy; 2026 M. Saad Khan</div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- ── TOGGLE SCRIPT ── -->
+    <script>
+        const toggleBtn = document.querySelector('.toggle-light');
+        const body = document.body;
+
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            toggleBtn.innerHTML = '<span>☾</span> Toggle Dark';
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                toggleBtn.innerHTML = '<span>☀</span> Toggle White';
+            } else {
+                localStorage.setItem('theme', 'light');
+                toggleBtn.innerHTML = '<span>☾</span> Toggle Dark';
+            }
+        });
+    </script>
+
+    <!-- ── HAMBURGER MENU SCRIPT ── -->
+    <script>
+        const hamburger = document.getElementById('hamburgerBtn');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+
+        function toggleSidebar(open) {
+            if (open === undefined) {
+                body.classList.toggle('sidebar-open');
+            } else if (open) {
+                body.classList.add('sidebar-open');
+            } else {
+                body.classList.remove('sidebar-open');
+            }
+        }
+
+        hamburger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleSidebar();
+        });
+
+        overlay.addEventListener('click', () => {
+            toggleSidebar(false);
+        });
+
+        sidebar.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    toggleSidebar(false);
+                }
+            });
+        });
+    </script>
+
+    <!-- ── ANIMATION SCRIPT (left side only, 20% width, maxCap 27) ── -->
+    <script>
+                if (window.innerWidth <= 768) {
+            // Mobile: no animation at all
+            document.getElementById('gameCanvas').style.display = 'none';
+        }
+        else {
+        // ... your entire existing animation script goes here ...
+
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        function getLeftWidth() {
+            const w = window.innerWidth * 0.20;
+            return Math.min(Math.max(w, 160), 400);
+        }
+        let leftWidth = getLeftWidth();
+
+        let bgColor, watermarkRGB;
+        const tealRGB = '0, 139, 139';
+
+        function updateColors() {
+            if (document.body.classList.contains('dark-mode')) {
+                bgColor = '#121212';
+                watermarkRGB = '255, 255, 255';
+            } else {
+                bgColor = '#ffffff';
+                watermarkRGB = '0, 0, 0';
+            }
+        }
+        updateColors();
+
+        toggleBtn.addEventListener('click', updateColors);
+
+        function drawBackground() {
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(0, 0, leftWidth, canvas.height);
+            ctx.fillStyle = `rgba(${watermarkRGB}, 0.10)`;
+            const gridSize = 10;
+            for (let x = 0; x < leftWidth; x += gridSize) {
+                for (let y = 0; y < canvas.height; y += gridSize) {
+                    ctx.fillRect(x - 1, y - 1, 2, 2);
+                }
+            }
+        }
+
+        class RoboticDot {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.step = 10;
+                this.size = 3;
+                this.dir = Math.floor(Math.random() * 4);
+                this.move_timer = 0;
+                this.is_dying = false;
+                this.death_opacity = 1.0;
+                this.startDying = collapseTime + Math.random() * 800;
+            }
+
+            update() {
+                if (this.is_dying) {
+                    this.death_opacity -= 0.01;
+                    if (this.death_opacity <= 0) return true;
+                } else {
+                    this.move_timer++;
+                    if (this.move_timer >= 10) {
+                        this.move_timer = 0;
+                        if (Math.random() < 0.03) {
+                            this.dir = (this.dir + (Math.random() < 0.5 ? 1 : 3)) % 4;
+                        }
+                        if (this.dir === 0) this.y -= this.step;
+                        else if (this.dir === 1) this.x += this.step;
+                        else if (this.dir === 2) this.y += this.step;
+                        else if (this.dir === 3) this.x -= this.step;
+                        if (this.x > leftWidth) this.x = 0;
+                        if (this.x < 0) this.x = leftWidth;
+                        if (this.y > canvas.height) this.y = 0;
+                        if (this.y < 0) this.y = canvas.height;
+                    }
+                }
+                return false;
+            }
+
+            draw() {
+                const alpha = this.is_dying ? this.death_opacity : 1.0;
+                ctx.fillStyle = `rgba(${tealRGB}, ${alpha})`;
+                ctx.fillRect(this.x, this.y, this.size, this.size);
+            }
+        }
+
+        let dots = [];
+        let globalTime = 0;
+        const collapseTime = 2000;
+        const maxCap = 27;
+
+        for (let i = 0; i < 12; i++) {
+            dots.push(new RoboticDot(
+                Math.random() * leftWidth,
+                Math.random() * canvas.height
+            ));
+        }
+
+        function animate() {
+            globalTime++;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.beginPath();
+            ctx.rect(0, 0, leftWidth, canvas.height);
+            ctx.clip();
+            drawBackground();
+
+            if (globalTime < collapseTime) {
+                for (let i = dots.length - 1; i >= 0; i--) {
+                    const dead = dots[i].update();
+                    dots[i].draw();
+                    if (dots.length < maxCap && Math.random() < 0.005) {
+                        dots.push(new RoboticDot(dots[i].x, dots[i].y));
+                    }
+                    if (dead) dots.splice(i, 1);
+                }
+            } else {
+                for (let i = dots.length - 1; i >= 0; i--) {
+                    const dot = dots[i];
+                    if (globalTime > dot.startDying) {
+                        dot.is_dying = true;
+                    }
+                    const dead = dot.update();
+                    dot.draw();
+                    if (dead) dots.splice(i, 1);
+                }
+                if (dots.length === 0) {
+                    globalTime = 0;
+                    for (let i = 0; i < 12; i++) {
+                        dots.push(new RoboticDot(
+                            Math.random() * leftWidth,
+                            Math.random() * canvas.height
+                        ));
+                    }
+                }
+            }
+            ctx.restore();
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            leftWidth = getLeftWidth();
+            for (const dot of dots) {
+                if (dot.x > leftWidth) dot.x = leftWidth * 0.95;
+                if (dot.y > canvas.height) dot.y = canvas.height * 0.95;
+            }
+        });
+        }
+    </script>
+
+</body>
+</html>
