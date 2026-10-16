@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.05 0"/>
+      <feComposite operator="over" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="675" fill="#f4f0e8"/>
+
+  <!-- single helix thread entering -->
+  <g fill="none" stroke="#2b2b28" stroke-width="2">
+    <path d="M 60 200 C 160 160, 220 240, 320 200 C 360 185, 380 175, 410 170"/>
+    <path d="M 60 240 C 160 280, 220 200, 320 240 C 360 255, 380 265, 410 270"/>
+    <g stroke-width="1.2" opacity="0.7">
+      <line x1="95" y1="208" x2="95" y2="232"/><line x1="135" y1="222" x2="135" y2="246"/>
+      <line x1="175" y1="232" x2="175" y2="250"/><line x1="215" y1="226" x2="215" y2="240"/>
+      <line x1="255" y1="208" x2="255" y2="232"/><line x1="295" y1="196" x2="295" y2="218"/>
+    </g>
+  </g>
+
+  <!-- the thread fans into the knot: each branch doubles -->
+  <g fill="none" stroke="#2b2b28" stroke-width="2">
+    <path d="M 410 170 C 520 140, 560 260, 660 210 C 700 190, 720 160, 760 150"/>
+    <path d="M 410 170 C 520 190, 580 100, 700 130 C 750 142, 780 170, 820 160"/>
+    <path d="M 410 270 C 520 300, 570 180, 660 230 C 700 250, 730 280, 760 300"/>
+    <path d="M 410 270 C 530 330, 600 240, 720 260 C 780 270, 800 240, 840 250"/>
+    <path d="M 760 150 C 850 130, 870 260, 950 200"/>
+    <path d="M 820 160 C 890 150, 900 300, 980 220"/>
+    <path d="M 760 300 C 850 340, 900 200, 960 260"/>
+    <path d="M 840 250 C 920 260, 930 180, 1000 240"/>
+  </g>
+
+  <!-- the tightening knot: threads looping over themselves -->
+  <g fill="none" stroke="#2b2b28" stroke-width="2">
+    <ellipse cx="1080" cy="230" rx="95" ry="62" transform="rotate(18 1080 230)"/>
+    <ellipse cx="1080" cy="230" rx="95" ry="62" transform="rotate(78 1080 230)"/>
+    <ellipse cx="1080" cy="230" rx="95" ry="62" transform="rotate(138 1080 230)"/>
+    <circle cx="1080" cy="230" r="10" fill="#2b2b28" stroke="none"/>
+  </g>
+
+  <!-- nodes: small dots where relations spawn -->
+  <g fill="#2b2b28">
+    <circle cx="410" cy="170" r="4"/><circle cx="410" cy="270" r="4"/>
+    <circle cx="660" cy="210" r="4"/><circle cx="660" cy="230" r="4"/>
+    <circle cx="760" cy="150" r="4"/><circle cx="760" cy="300" r="4"/>
+    <circle cx="820" cy="160" r="4"/><circle cx="840" cy="250" r="4"/>
+    <circle cx="950" cy="200" r="4"/><circle cx="980" cy="220" r="4"/>
+    <circle cx="960" cy="260" r="4"/><circle cx="1000" cy="240" r="4"/>
+  </g>
+
+  <!-- whisper of a question mark dissolving -->
+  <text x="640" y="330" font-family="Georgia, serif" font-size="22" fill="#2b2b28" opacity="0.35">?</text>
+  <text x="880" y="140" font-family="Georgia, serif" font-size="18" fill="#2b2b28" opacity="0.25">?</text>
+
+  <!-- caption -->
+  <text x="60" y="580" font-family="Georgia, serif" font-size="30" fill="#2b2b28" letter-spacing="1">ONE GENOME. MANY RELATIONS.</text>
+  <text x="60" y="620" font-family="Georgia, serif" font-size="30" fill="#2b2b28" letter-spacing="1">ONE KNOT.</text>
+  <text x="60" y="650" font-family="Georgia, serif" font-size="13" font-style="italic" fill="#2b2b28" opacity="0.6">in genomic data, every answer is tied to another question</text>
+</svg>
