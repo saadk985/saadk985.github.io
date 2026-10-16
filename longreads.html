@@ -169,7 +169,37 @@
             flex-grow: 1;
             max-width: 650px;
         }
+            /* Mobile top bar – hidden by default, shown only on mobile */
+    .mobile-topbar {
+        display: none;
+    }
 
+        /* Mobile top bar */
+        @media (max-width: 768px) {
+            .mobile-topbar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                position: sticky;
+                top: 0;
+                z-index: 60;
+                background: var(--bg-main);
+                border-bottom: 1px solid var(--border-color);
+                padding: 0.75rem 1.25rem;
+                margin: -2rem -1.5rem 1.5rem -1.5rem; /* counteract container padding */
+            }
+
+            .mobile-topbar .brand {
+                font-family: var(--font-serif);
+                font-size: 1rem;
+            color: var(--text-muted);
+            }
+
+            .mobile-topbar .hamburger {
+                position: static;
+                display: flex;
+            }
+        }
         /* Mobile site title – hidden on desktop */
         .mobile-site-title {
             display: none;
@@ -434,13 +464,6 @@
 </head>
 <body>
 
-    <!-- HAMBURGER MENU BUTTON -->
-    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-
     <!-- OVERLAY (click to close sidebar) -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
@@ -481,9 +504,15 @@
         <!-- RIGHT MAIN CONTENT -->
         <main class="main-content">
 
-            <!-- Mobile home button -->
-            <div class="mobile-site-title"><a href="/">M. Saad Khan</a></div>
-
+<!-- Mobile top bar -->
+<div class="mobile-topbar">
+    <a href="/" class="brand">M. Saad Khan</a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</div>
             <div class="section-label">Longreads</div>
 
             <div class="article-list">

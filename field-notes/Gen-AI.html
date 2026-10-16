@@ -295,7 +295,37 @@
             flex-grow: 1;
             max-width: 650px;
         }
+            /* Mobile top bar – hidden by default, shown only on mobile */
+    .mobile-topbar {
+        display: none;
+    }
 
+        /* Mobile top bar */
+        @media (max-width: 768px) {
+            .mobile-topbar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                position: sticky;
+                top: 0;
+                z-index: 60;
+                background: var(--bg-main);
+                border-bottom: 1px solid var(--border-color);
+                padding: 0.75rem 1.25rem;
+                margin: -2rem -1.5rem 1.5rem -1.5rem; /* counteract container padding */
+            }
+
+            .mobile-topbar .brand {
+                font-family: var(--font-serif);
+                font-size: 1rem;
+            color: var(--text-muted);
+            }
+
+            .mobile-topbar .hamburger {
+                position: static;
+                display: flex;
+            }
+        }
         /* Mobile site title – hidden on desktop */
         .mobile-site-title {
             display: none;
@@ -501,13 +531,6 @@
 </head>
 <body>
 
-    <!-- HAMBURGER MENU BUTTON -->
-    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-
     <!-- OVERLAY (click to close sidebar) -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
@@ -517,15 +540,15 @@
     <div class="container">
         <!-- LEFT SIDEBAR -->
         <nav class="sidebar" id="sidebar">
-            <div class="site-title"><a href="index.html">M. Saad Khan</a></div>
+            <div class="site-title"><a href="../">M. Saad Khan</a></div>
 
             <ul class="nav-list">
-                <li><a href="about.html">About</a></li>
-                <li><a href="field_notes" class="active-link">Field Notes</a></li>
-                <li><a href="longreads.html">Longreads</a></li>
-                <li><a href="research.html">Research</a></li>
-                <li><a href="read_picks.html">Read Picks</a></li>
-                <li><a href="rabbit-holes.html">Rabbit Holes</a></li>
+                <li><a href="../about">About</a></li>
+                <li><a href="../field_notes" class="active-link">Field Notes</a></li>
+                <li><a href="../longreads">Longreads</a></li>
+                <li><a href="../research">Research</a></li>
+                <li><a href="../read_picks">Read Picks</a></li>
+                <li><a href="../rabbit-holes">Rabbit Holes</a></li>
                 <li class="has-tag"><a href="#"><span>Consultancy </span><span class="nav-tag">soon</span></a></li>
                 <li class="has-tag"><a href="#"><span>Book <span class="nav-icon">↗</span></span><span class="nav-tag">soon</span></a></li>
                 <li class="has-tag"><a href="#"><span>Course <span class="nav-icon">↗</span></span><span class="nav-tag">soon</span></a></li>
@@ -548,9 +571,15 @@
         <!-- RIGHT MAIN CONTENT -->
         <main class="main-content">
 
-            <!-- Mobile home button -->
-            <div class="mobile-site-title"><a href="index.html">M. Saad Khan</a></div>
-
+<!-- Mobile top bar -->
+<div class="mobile-topbar">
+    <a href="../" class="brand">M. Saad Khan</a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</div>
     
             <!-- ── ARTICLE HEADER ── -->
         <header class="article-header">
@@ -573,7 +602,7 @@
                 
                 <p>The very foundation of where we are now was all thanks to our linguistics. Now, imagine the next decade, where our expressivity comes down to zero, and our thought processes are being handled by an NLP machine which generates, generates based on mathematical formulas. The argument I want to present here is not against the machines but rather a better complementarity system. The AI slop all around us is the worst possible use we are abusing NLP with. Present-day readers on the internet have trust issues with the content they are consuming; social media posts and comments are looked at through wary eyes, with people blaming each other for AI slop. A place which was used to connect with others is now a battleground of expressivity dilemma. Expressivity throughout the millennium sparked the discussions in humanity, and that in return promoted collaborations, theories, projects, etc. Now, the text seems to diverge from all those emotions. The content on the internet is photographic text which just tells the truth, but the truth has no foundations. Each and every thought expressed by humans through linguistics: all along the product of a vast, ever-shifting network of billions of neurons shaped over millennia, is being sidelined by a reductive math equation whose parameters barely exceed two trillion with static weights. </p>
                 <p>I'm not in any way a preacher of AI Doom's day or have any skepticism about these models. The main point simply is that the mess these generative AIs are creating is gonna cost us the whole foundations which we are currently standing upon. What you speak, listen, or read, if not by another human, you are losing the only edge as a species you have over others. The current generative-AI boom is quite the opposite of what happened a millennium ago. IMO, we should use AI aggressively, but the medium of communication should not be how we communicate with humans, nor should the response from a model be through linguistics. Just like we communicated with computers through code, keeping the essence of human linguistics intact, we need specific, more sophisticated means to communicate with AI that should not involve the use of human language.</p>
-     </div>
+            </div>
 
             <!-- ── ARTICLE FOOTER ── -->
 
