@@ -3,765 +3,497 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Field Notes - M. Saad Khan</title>
+    <title>Read Picks - M. Saad Khan</title>
     <style>
-        /* ── CSS Variables ── */
         :root {
-            --text-main: #333333;
-            --text-muted: #666666;
-            --text-light: #999999;
-            --bg-main: #ffffff;
-            --border-color: #eaeaea;
-            --accent-orange: #fb7e4a;
-            --accent-bg: #f5f5f5;
+            --text-main: #333333; --text-muted: #666666; --text-light: #999999;
+            --bg-main: #ffffff; --border-color: #eaeaea;
+            --accent-orange: #fb7e4a; --accent-bg: #f5f5f5;
             --font-serif: "Georgia", "Times New Roman", serif;
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             --font-mono: "Menlo", "Consolas", "Courier New", monospace;
         }
-
-        html {
-            scrollbar-gutter: stable;
-        }
-        
-
+        html { scrollbar-gutter: stable; }
         body.dark-mode {
-            --text-main: #e5e5e5;
-            --text-muted: #a3a3a3;
-            --text-light: #737373;
-            --bg-main: #121212;
-            --border-color: #2e2e2e;
-            --accent-bg: #1e1e1e;
+            --text-main: #e5e5e5; --text-muted: #a3a3a3; --text-light: #737373;
+            --bg-main: #121212; --border-color: #2e2e2e; --accent-bg: #1e1e1e;
         }
-
         body {
-            margin: 0;
-            padding: 0;
-            font-family: var(--font-serif);
-            background-color: var(--bg-main);
-            color: var(--text-main);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            position: relative;
-            z-index: 1;
-            overflow-x: hidden;
+            margin: 0; padding: 0; font-family: var(--font-serif);
+            background-color: var(--bg-main); color: var(--text-main);
+            line-height: 1.6; -webkit-font-smoothing: antialiased;
+            position: relative; z-index: 1; overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
+        a { color: inherit; text-decoration: none; }
         .nav-tag {
-            display: inline-block;
-            margin-left: 6px;
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            color: var(--text-light);
-            border: 1px solid var(--border-color);
-            padding: 0.1rem 0.4rem;
-            border-radius: 2px;
-            line-height: 1.4;
+            display: inline-block; margin-left: 6px; font-family: var(--font-mono);
+            font-size: 0.7rem; color: var(--text-light);
+            border: 1px solid var(--border-color); padding: 0.1rem 0.4rem;
+            border-radius: 2px; line-height: 1.4;
         }
-        
-        .nav-list li.has-tag a {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-        
-        /* ── ANIMATION CANVAS ── */
+        .nav-list li.has-tag a { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         #gameCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 0;
-            pointer-events: none;
-            display: block;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0; pointer-events: none; display: block;
+            transition: opacity 0.8s ease;
         }
-
-        /* Hide canvas entirely on mobile */
-@media (max-width: 768px) {
-    #gameCanvas {
-        display: none;
-    }
-}
-        /* ── Layout ── */
+        @media (max-width: 768px) { #gameCanvas { display: none; } }
         .container {
-            display: flex;
-            max-width: 900px;
-            margin: 3.5rem auto 4.5rem auto;
-            padding: 0 2rem;
-            gap: 4rem;
-            position: relative;
-            z-index: 1;
+            display: flex; max-width: 900px;
+            margin: 3.5rem auto 4.5rem auto; padding: 0 2rem;
+            gap: 4rem; position: relative; z-index: 1;
         }
-
         .sidebar {
-            width: 180px;
-            flex-shrink: 0;
-            position: sticky;
-            top: 2rem;
-            align-self: flex-start;
-            max-height: calc(100vh - 4rem);
-            overflow-y: auto;
+            width: 180px; flex-shrink: 0; position: sticky;
+            top: 2rem; align-self: flex-start;
+            max-height: calc(100vh - 4rem); overflow-y: auto;
         }
-
-        .site-title {
-            font-size: 1.05rem;
-            margin-bottom: 2rem;
-            color: var(--text-muted);
-        }
-
-        .nav-list {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 0.5rem 0;
-        }
-        .nav-list li {
-            margin-bottom: 0.3rem;
-        }
+        .site-title { font-size: 1.05rem; margin-bottom: 2rem; color: var(--text-muted); }
+        .nav-list { list-style: none; padding: 0; margin: 0 0 0.5rem 0; }
+        .nav-list li { margin-bottom: 0.3rem; }
         .nav-list a {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            transition: color 0.2s;
-            display: inline-block;
-            padding: 0.16rem 0;
-            line-height: 1.4;
+            color: var(--text-muted); font-size: 0.95rem;
+            transition: color 0.2s; display: inline-block;
+            padding: 0.16rem 0; line-height: 1.4;
         }
-        .nav-list a:hover {
-            color: var(--text-main);
-        }
+        .nav-list a:hover { color: var(--text-main); }
         .active-link {
-            text-decoration: underline;
-            text-underline-offset: 4px;
+            text-decoration: underline; text-underline-offset: 4px;
             color: var(--text-main) !important;
         }
-        .nav-icon {
-            font-size: 0.8em;
-            margin-left: 3px;
-        }
-
-        .divider {
-            border: none;
-            border-top: 1px solid var(--border-color);
-            margin: 2rem 0;
-        }
-
+        .nav-icon { font-size: 0.8em; margin-left: 3px; }
+        .divider { border: none; border-top: 1px solid var(--border-color); margin: 2rem 0; }
         .toggle-light {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 0.5rem 0;
-            font-family: inherit;
-            margin-top: 1.5rem;
-            position: relative;
-            z-index: 2;
+            display: flex; align-items: center; gap: 0.5rem;
+            color: var(--text-muted); font-size: 0.95rem; cursor: pointer;
+            background: none; border: none; padding: 0.5rem 0;
+            font-family: inherit; margin-top: 1.5rem;
+            position: relative; z-index: 2;
         }
-
-        .main-content {
-            flex-grow: 1;
-            max-width: 650px;
-        }
-            /* Mobile top bar – hidden by default, shown only on mobile */
-    .mobile-topbar {
-        display: none;
-    }
-
-        /* Mobile top bar */
+        .main-content { flex-grow: 1; max-width: 650px; }
+        .mobile-topbar { display: none; }
         @media (max-width: 768px) {
             .mobile-topbar {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                position: sticky;
-                top: 0;
-                z-index: 60;
+                display: flex; align-items: center; justify-content: space-between;
+                position: sticky; top: 0; z-index: 60;
                 background: var(--bg-main);
                 border-bottom: 1px solid var(--border-color);
                 padding: 0.75rem 1.25rem;
-                margin: -2rem -1.5rem 1.5rem -1.5rem; /* counteract container padding */
+                margin: -2rem -1.5rem 1.5rem -1.5rem;
             }
-
             .mobile-topbar .brand {
-                font-family: var(--font-serif);
-                font-size: 1rem;
-            color: var(--text-muted);
+                font-family: var(--font-serif); font-size: 1rem; color: var(--text-muted);
             }
-
-            .mobile-topbar .hamburger {
-                position: static;
-                display: flex;
-            }
+            .mobile-topbar .hamburger { position: static; display: flex; }
         }
-        /* Mobile site title – hidden on desktop */
-        .mobile-site-title {
-            display: none;
+        .mobile-site-title { display: none; }
+        .prose { margin-bottom: 5rem; }
+        .prose p {
+            font-size: 1.05rem; color: var(--text-main);
+            margin-bottom: 2rem; line-height: 1.7;
         }
-
-        .section-label {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            letter-spacing: 0.15em;
-            color: var(--text-light);
-            text-transform: uppercase;
-            margin-bottom: 2rem;
-        }
-
-        .article-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .article-item {
-            display: flex;
-            align-items: baseline;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .article-date {
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            width: 85px;
-            flex-shrink: 0;
-        }
-
-        .article-title {
-            font-size: 1.05rem;
+        .prose a {
+            text-decoration: underline; text-underline-offset: 3px;
             color: var(--text-main);
-            flex-grow: 1;
         }
-
-        .article-title:hover {
-            text-decoration: none;
+        .section-label {
+            font-family: var(--font-mono); font-size: 0.75rem;
+            letter-spacing: 0.15em; color: var(--text-light);
+            text-transform: uppercase; margin-bottom: 2.5rem;
         }
-
-        .article-item:hover {
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.2rem;
-        }
-
-        .article-tag {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--text-light);
-            border: 1px solid var(--border-color);
-            padding: 0.15rem 0.4rem;
-            border-radius: 2px;
-        }
-
         .site-footer {
-            margin-top: 4.5rem;
-            padding-top: 1.5rem;
+            margin-top: 4.5rem; padding-top: 1.5rem;
             border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            flex-wrap: wrap;
-            gap: 1rem;
+            display: flex; justify-content: flex-start;
+            font-size: 0.85rem; color: var(--text-muted);
+            flex-wrap: wrap; gap: 1rem;
         }
-
-        /* ── HAMBURGER MENU BUTTON ── */
         .hamburger {
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 28px;
-            height: 20px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            position: fixed;
-            z-index: 100;
-            transition: none;
+            display: none; flex-direction: column; justify-content: space-between;
+            width: 28px; height: 20px; background: transparent; border: none;
+            cursor: pointer; padding: 0; position: fixed; z-index: 100;
         }
-
         .hamburger span {
-            display: block;
-            height: 2px;
-            width: 100%;
-            background: var(--text-main);
-            border-radius: 2px;
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            display: block; height: 2px; width: 100%; background: var(--text-main);
+            border-radius: 2px; transition: transform 0.3s ease, opacity 0.3s ease;
             transform-origin: center;
         }
-
-        .sidebar-open .hamburger span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-        .sidebar-open .hamburger span:nth-child(2) {
-            opacity: 0;
-        }
-        .sidebar-open .hamburger span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
-        }
-
-        /* ── OVERLAY FOR SIDEBAR ── */
+        .sidebar-open .hamburger span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .sidebar-open .hamburger span:nth-child(2) { opacity: 0; }
+        .sidebar-open .hamburger span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
         .sidebar-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0,0,0,0.4);
-            z-index: 49;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh; background: rgba(0,0,0,0.4);
+            z-index: 49; opacity: 0; transition: opacity 0.3s ease;
         }
-
-        .sidebar-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* ── MOBILE SIDEBAR BEHAVIOUR ── */
+        .sidebar-overlay.active { display: block; opacity: 1; }
         @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                gap: 2rem;
-                margin: 2rem auto;
-                padding: 0 1.5rem;
-            }
-
-            .sidebar .site-title {
-                display: none;
-            }
-
+            .container { flex-direction: column; gap: 2rem; margin: 2rem auto; padding: 0 1.5rem; }
+            .sidebar .site-title { display: none; }
             .mobile-site-title {
-                display: block;
-                text-align: center;
-                font-size: 1.2rem;
-                margin-bottom: 1.5rem;
-                padding-right: 3.5rem;
-                padding-left: 1rem;
+                display: block; text-align: center; font-size: 1.2rem;
+                margin-bottom: 1.5rem; padding-right: 3.5rem; padding-left: 1rem;
             }
-            .mobile-site-title a {
-                color: var(--text-muted);
-            }
-
+            .mobile-site-title a { color: var(--text-muted); }
             .sidebar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 250px;
-                height: 100vh;
-                background: var(--bg-main);
-                padding: 2rem 1.5rem;
+                position: fixed; top: 0; left: 0; width: 250px; height: 100vh;
+                background: var(--bg-main); padding: 2rem 1.5rem;
                 box-shadow: 2px 0 10px rgba(0,0,0,0.1);
-                z-index: 50;
-                overflow-y: auto;
+                z-index: 50; overflow-y: auto;
                 border-right: 1px solid var(--border-color);
                 transform: translateX(-100%);
                 transition: transform 0.3s ease;
             }
-
-            .sidebar-open .sidebar {
-                transform: translateX(0);
-            }
-
-            .hamburger {
-                display: flex;
-                right: 1.5rem;
-                top: 2.6rem;
-            }
-
-            .sidebar-open .hamburger {
-                right: 1.5rem !important;
-                top: 2.6rem !important;
-            }
-
-            .sidebar-overlay.active {
-                display: block;
-                opacity: 1;
-            }
-
-            /* Hide article tags on mobile */
-            .article-tag {
-                display: none;
-            }
-
-            /* Footer left aligned */
-            .site-footer {
-                justify-content: flex-start;
-            }
-
-            .main-content {
-                max-width: 100%;
-                padding-top: 0.5rem;
-            }
-
-            .article-item {
-                flex-wrap: wrap;
-                gap: 0.5rem;
-            }
-            .article-title {
-                width: 100%;
-                order: 3;
-                font-size: 1rem;
-            }
-            .article-date {
-                width: 70px;
-                font-size: 0.8rem;
-            }
+            .sidebar-open .sidebar { transform: translateX(0); }
+            .hamburger { display: flex; right: 1.5rem; top: 2.6rem; }
+            .sidebar-open .hamburger { right: 1.5rem !important; top: 2.6rem !important; }
+            .main-content { max-width: 100%; padding-top: 0.5rem; }
+            .prose p { font-size: 1rem; }
         }
-
         @media (max-width: 480px) {
-            .container {
-                padding: 0 1rem;
-            }
-            .mobile-site-title {
-                font-size: 1.05rem;
-                padding-right: 3rem;
-                padding-left: 0.5rem;
-            }
-            .nav-list a {
-                font-size: 0.9rem;
-            }
-            .toggle-light {
-                font-size: 0.9rem;
-            }
-            .article-title {
-                font-size: 0.95rem;
-            }
-            .article-date {
-                width: 60px;
-                font-size: 0.75rem;
-            }
-            .site-footer {
-                font-size: 0.75rem;
-                flex-direction: column;
-                align-items: flex-start;
-                text-align: left;
-            }
-            .hamburger {
-                right: 1rem;
-                top: 2.2rem;
-            }
-            .sidebar-open .hamburger {
-                right: 1rem !important;
-                top: 2.2rem !important;
-            }
+            .container { padding: 0 1rem; }
+            .mobile-site-title { font-size: 1.05rem; padding-right: 3rem; padding-left: 0.5rem; }
+            .nav-list a { font-size: 0.9rem; }
+            .toggle-light { font-size: 0.9rem; }
+            .prose p { font-size: 0.95rem; }
+            .hamburger { right: 1rem; top: 2.2rem; }
+            .sidebar-open .hamburger { right: 1rem !important; top: 2.2rem !important; }
         }
     </style>
 </head>
 <body>
 
-    <!-- OVERLAY (click to close sidebar) -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <!-- ── FULL‑SCREEN CANVAS ── -->
     <canvas id="gameCanvas"></canvas>
 
     <div class="container">
-        <!-- LEFT SIDEBAR -->
         <nav class="sidebar" id="sidebar">
             <div class="site-title"><a href="/">M. Saad Khan</a></div>
-
             <ul class="nav-list">
                 <li><a href="about">About</a></li>
-                <li><a href="field_notes" class="active-link">Field Notes</a></li>
-                <li><a href="longreads">Longreads</a></li>
+                <li><a href="field_notes">Field Notes</a></li>
+                <li><a href="longreads">Long Reads</a></li>
                 <li><a href="research">Research</a></li>
-                <li><a href="read_picks">Read Picks</a></li>
+                <li><a href="read_picks" class="active-link">Read Picks</a></li>
                 <li><a href="rabbit-holes">Rabbit Holes</a></li>
                 <li class="has-tag"><a href="#"><span>Consultancy </span><span class="nav-tag">soon</span></a></li>
                 <li class="has-tag"><a href="#"><span>Book <span class="nav-icon">↗</span></span><span class="nav-tag">soon</span></a></li>
                 <li class="has-tag"><a href="#"><span>Course <span class="nav-icon">↗</span></span><span class="nav-tag">soon</span></a></li>
             </ul>
-
             <hr class="divider" />
-
             <ul class="nav-list">
                 <li><a href="https://www.linkedin.com/in/saad985/">LinkedIn <span class="nav-icon">↗</span></a></li>
                 <li><a href="https://substack.com/@saadk985">Substack <span class="nav-icon">↗</span></a></li>
                 <li><a href="mailto:msaadkhn985@gmail.com">Email <span class="nav-icon">↗</span></a></li>
                 <li><a href="https://github.com/saadk985">GitHub <span class="nav-icon">↗</span></a></li>
             </ul>
-
-            <button class="toggle-light">
-                <span>☾</span> Toggle Dark
-            </button>
+            <button class="toggle-light"><span>☾</span> Toggle Dark</button>
         </nav>
 
-        <!-- RIGHT MAIN CONTENT -->
         <main class="main-content">
+            <div class="mobile-topbar">
+                <a href="/" class="brand">M. Saad Khan</a>
+                <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+            <div class="section-label">Read Picks</div>
 
-<!-- Mobile top bar -->
-<div class="mobile-topbar">
-    <a href="/" class="brand">M. Saad Khan</a>
-    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-</div>
-            <div class="section-label">Field Notes</div>
-
-            <div class="article-list">
-                <div class="article-item">
-                    <div class="article-date">2026.10.29</div>
-                    <a href="#" class="article-title">The Blank On The Map (Centromeres).</a>
-                    <div class="article-tag">Soon</div>
-                </div>
+            <div class="prose">
+                <p>This section is an inspiration, I got from Nico McCarty's bookshelf. Books are our companion that shapes our thoughts, ideologies, and indirectly our actions as well.</p>
+                <p>My reading journey started from 8th grade, and the first novel I read was "A Tale of Two Cities." I like fiction, non-fiction, the philosophy genre. I'm a part of Islamabad-based book club as well.</p>
+                <p>Conventional expectation would be that I must have a personal physical library for sure but interestingly, this is not the case. I've mostly read books either through lending, in libraries, or through pdf. My laptop has its own e-library containing almost 300+ books.</p>
+                <p>Among those books, half of them are technical: Biology, Computer Science, Math. Since, I've mentioned in the <a href="about">About</a>, I do read but my collecting tendency is often more dominant. So, I've read somewhere around 50-60 books over the years. Embarrassing to confess, isn't?</p>
+                <p>My favorite book is "Siddhartha" in fiction, "Thinking in Systems: A Primer" in non-fiction, and in Philosophy genre, I'm including a fictional book that acts like a live-simulation of all the philosophical concepts: "The Brothers Karamazov. In philosophy, I find the concept of "Ubermensch" fascinating. If we stretch it further to discuss about Authors, I'm deeply impressed by the raw intensity of Sylvia Plath, explainability of Dostoevsky, philosophical concepts of Nietzsche but still at the end, I think what you enjoy to read also depends on your life phase. It's certainly possible that the book you like today may not align with you tomorrow due to changed circumstances. Among modern writers, I enjoy reading Yuval Noah Harari, Andy Weir, Fei-fei Li's writing was good as well. Recently, I regularly read notes, and articles, written by Tamara on Substack (Museguided). Mostly, my reading list contains classics or 1900s literature, so am not that much aware of the modern fictional books to begin with.</p>
+                <p>Below, I'm suggesting five books (excluding my favorites), which in my opinion everyone should read once in their life. I'm not going technical either since we will have a lot of ground to discuss these stuffs somewhere else. I don't wanna bomb you with dozens of books either as this in most cases makes the choice more complicated. Book choices are not stand-alone, rather imo, they complement each other.</p>
+                <ul>
+                    <li>The Unaccountability Machine by Dan Davies</li>
+                    <li>Fourty Rules of Love by Elif Shafak</li>
+                    <li>The Picture of Dorian Gray by Oscar Wilde</li>
+                    <li>Ulysses by James Joyce</li>
+                    <li>The Unabridged Journals of Syliva Plath</li>
+                </ul>
             </div>
 
-
-            <div class="article-list">
-                <div class="article-item">
-                    <div class="article-date">2026.09.29</div>
-                    <a href="field-notes/" class="article-title">Gen AI & Expressivity Crisis.</a>
-                    <div class="article-tag">Feild Notes</div>
-                </div>
-            </div>
-
-            <div class="article-list">
-                <div class="article-item">
-                    <div class="article-date">2026.09.12</div>
-                    <a href="field-notes/Photographic-Education" class="article-title">Photographic Education, and the way out.</a>
-                    <div class="article-tag">Feild Notes</div>
-                </div>
-            </div>
-
-            <footer class="site-footer">
-                <div>&copy; 2026 M. Saad Khan</div>
-            </footer>
-
+            <footer class="site-footer"><div>&copy; 2026 M. Saad Khan</div></footer>
         </main>
     </div>
 
-    <!-- ── TOGGLE SCRIPT ── -->
+    <!-- Theme toggle (OS-aware) -->
     <script>
-
-        const toggleBtn = document.querySelector('.toggle-light');
-        const body = document.body;
-
-        if (localStorage.getItem('theme') === 'dark') {
-            body.classList.add('dark-mode');
-            toggleBtn.innerHTML = '<span>☾</span> Toggle Dark';
-        }
-
-        toggleBtn.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            if (body.classList.contains('dark-mode')) {
-                localStorage.setItem('theme', 'dark');
-                toggleBtn.innerHTML = '<span>☀</span> Toggle White';
-            } else {
-                localStorage.setItem('theme', 'light');
-                toggleBtn.innerHTML = '<span>☾</span> Toggle Dark';
-            }
-        });
+    const toggleBtn = document.querySelector('.toggle-light');
+    const body = document.body;
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+    if (initialDark) { body.classList.add('dark-mode'); toggleBtn.innerHTML = '<span>☀</span> Toggle White'; }
+    toggleBtn.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        toggleBtn.innerHTML = isDark ? '<span>☀</span> Toggle White' : '<span>☾</span> Toggle Dark';
+    });
     </script>
 
-    <!-- ── HAMBURGER MENU SCRIPT ── -->
+    <!-- Hamburger -->
     <script>
-        const hamburger = document.getElementById('hamburgerBtn');
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('sidebarOverlay');
+    const hamburger = document.getElementById('hamburgerBtn');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    function toggleSidebar(open) {
+        if (open === undefined) body.classList.toggle('sidebar-open');
+        else if (open) body.classList.add('sidebar-open');
+        else body.classList.remove('sidebar-open');
+    }
+    hamburger.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(); });
+    overlay.addEventListener('click', () => toggleSidebar(false));
+    sidebar.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => { if (window.innerWidth <= 768) toggleSidebar(false); });
+    });
+    </script>
 
-        function toggleSidebar(open) {
-            if (open === undefined) {
-                body.classList.toggle('sidebar-open');
-            } else if (open) {
-                body.classList.add('sidebar-open');
-            } else {
-                body.classList.remove('sidebar-open');
+    <!-- ── THE LATENT FORM (reading-page variant) ── -->
+    <script>
+    (function () {
+    'use strict';
+    const canvas = document.getElementById('gameCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d', { alpha: true });
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) { canvas.style.opacity = '0'; return; }
+
+    const CFG = {
+        dendriteParticles: 2200, dustParticles: 240,
+        treeDepth: 6, trunkCount: 3,
+        trunkStart: 0.10, trunkSpacing: 0.18,
+        obsRadiusBase: 0.20, mouseRadius: 165,
+        obsSpeed: 0.000155, memoryDecay: 0.990,
+        centerBias: 0.30, obsAmpX: 0.22, obsAmpY: 0.28,
+        maskStart: 0.40, maskEnd: 0.72,
+    };
+
+    let W = 0, H = 0, DPR = 1, CX = 0, CY = 0, obsRadiusBase = 220;
+    let branches = [], particles = [], dust = [], shockwaves = [];
+    let obsX = 0, obsY = 0, obsR = 200;
+    let lastT = 0, fadeIn = 0;
+
+    function resize() {
+        DPR = Math.min(window.devicePixelRatio || 1, 2);
+        W = window.innerWidth; H = window.innerHeight;
+        canvas.width = (W * DPR) | 0;
+        canvas.height = (H * DPR) | 0;
+        canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        CX = W * CFG.centerBias; CY = H * 0.5;
+        obsRadiusBase = Math.min(W, H) * CFG.obsRadiusBase;
+        build();
+    }
+
+    function build() { buildDendrite(); buildParticles(); buildDust(); }
+
+    function buildDendrite() {
+        branches = [];
+        function grow(x, y, angle, length, depth, width, seed) {
+            const steps = Math.max(6, Math.floor(length / 7));
+            const pts = [];
+            for (let i = 0; i <= steps; i++) {
+                const t = i / steps;
+                const a = angle + Math.sin(t * Math.PI * 1.6 + seed) * 0.18;
+                pts.push({ x: x + Math.cos(a) * length * t, y: y + Math.sin(a) * length * t });
+            }
+            branches.push({ pts, width, depth });
+            const end = pts[pts.length - 1];
+            if (depth > 0) {
+                const nChildren = depth > 3 ? 2 : (Math.random() < 0.4 ? 3 : 2);
+                for (let i = 0; i < nChildren; i++) {
+                    const spread = (i - (nChildren - 1) / 2) * (0.5 + Math.random() * 0.2);
+                    const cAngle = angle + spread + (Math.random() - 0.5) * 0.25;
+                    const cLength = length * (0.64 + Math.random() * 0.16);
+                    grow(end.x, end.y, cAngle, cLength, depth - 1, width * 0.72, seed + i * 17);
+                }
             }
         }
+        for (let i = 0; i < CFG.trunkCount; i++) {
+            const startX = W * (CFG.trunkStart + i * CFG.trunkSpacing) + (Math.random() - 0.5) * 40;
+            const angle = -Math.PI / 2 + (i - (CFG.trunkCount - 1) / 2) * 0.32 + (Math.random() - 0.5) * 0.18;
+            const length = H * 0.30 + Math.random() * 70;
+            const width = 9 + Math.random() * 3;
+            grow(startX, H + 40, angle, length, CFG.treeDepth, width, i * 100);
+        }
+    }
 
-        hamburger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            toggleSidebar();
-        });
+    function buildParticles() {
+        particles = [];
+        let totalW = 0;
+        for (const b of branches) totalW += b.width * b.width;
+        for (const br of branches) {
+            const weight = (br.width * br.width) / totalW;
+            const count = Math.max(2, Math.floor(weight * CFG.dendriteParticles));
+            for (let i = 0; i < count; i++) {
+                const t = Math.random();
+                const idx = Math.min(br.pts.length - 1, Math.floor(t * br.pts.length));
+                const pt = br.pts[idx];
+                const scatter = br.width * 0.42 + 1.4;
+                const a = Math.random() * Math.PI * 2;
+                const r = Math.sqrt(Math.random()) * scatter;
+                const hx = pt.x + Math.cos(a) * r;
+                const hy = pt.y + Math.sin(a) * r;
+                particles.push({
+                    homeX: hx, homeY: hy,
+                    x: hx + (Math.random() - 0.5) * 55,
+                    y: hy + (Math.random() - 0.5) * 55,
+                    vx: 0, vy: 0,
+                    seed: Math.random() * 1000,
+                    size: 0.4 + Math.random() * 0.9,
+                    memory: 0,
+                });
+            }
+        }
+    }
 
-        overlay.addEventListener('click', () => {
-            toggleSidebar(false);
-        });
-
-        sidebar.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 768) {
-                    toggleSidebar(false);
-                }
+    function buildDust() {
+        dust = [];
+        for (let i = 0; i < CFG.dustParticles; i++) {
+            dust.push({
+                x: Math.random() * W, y: Math.random() * H,
+                vx: (Math.random() - 0.5) * 0.12, vy: (Math.random() - 0.5) * 0.12,
+                size: 0.35 + Math.random() * 0.4,
             });
-        });
+        }
+    }
+
+    const mouse = { x: -9999, y: -9999, active: false };
+    window.addEventListener('pointermove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true; }, { passive: true });
+    window.addEventListener('pointerleave', () => { mouse.active = false; });
+    window.addEventListener('blur', () => { mouse.active = false; });
+    window.addEventListener('pointerdown', (e) => {
+        if (W > 768 && !e.target.closest('a, button')) shockwaves.push({ x: e.clientX, y: e.clientY, radius: 0, age: 0 });
+    });
+
+    function palette() {
+        const dark = document.body.classList.contains('dark-mode');
+        return dark
+            ? { base: [128, 122, 112], accent: [255, 138, 92], dustA: 0.06, ringA: 0.15 }
+            : { base: [110, 100, 90],  accent: [251, 126, 74], dustA: 0.05, ringA: 0.15 };
+    }
+
+    function frame(t) {
+        requestAnimationFrame(frame);
+        if (W <= 768) return;
+        const dt = lastT ? Math.min(t - lastT, 50) : 16;
+        lastT = t;
+        fadeIn = Math.min(1, fadeIn + 0.015);
+
+        const phase = t * CFG.obsSpeed + Math.sin(t * 0.00022) * 2.1;
+        obsX = CX + Math.cos(phase * 1.31) * (W * CFG.obsAmpX);
+        obsY = CY + Math.sin(phase * 1.73) * (H * CFG.obsAmpY);
+        obsR = obsRadiusBase * (1 + Math.sin(t * 0.0005) * 0.12);
+        const obsR2 = obsR * obsR;
+
+        const C = palette();
+        ctx.clearRect(0, 0, W, H);
+
+        const atm = ctx.createRadialGradient(obsX, obsY, 0, obsX, obsY, obsR * 1.35);
+        atm.addColorStop(0, 'rgba(251,126,74,' + (0.055 * fadeIn).toFixed(3) + ')');
+        atm.addColorStop(1, 'rgba(251,126,74,0)');
+        ctx.fillStyle = atm;
+        ctx.fillRect(obsX - obsR * 1.35, obsY - obsR * 1.35, obsR * 2.7, obsR * 2.7);
+
+        ctx.fillStyle = 'rgba(' + C.base[0] + ',' + C.base[1] + ',' + C.base[2] + ',' + (C.dustA * fadeIn).toFixed(3) + ')';
+        for (let i = 0; i < dust.length; i++) {
+            const d = dust[i];
+            d.x += d.vx; d.y += d.vy;
+            if (d.x < 0) d.x = W; else if (d.x > W) d.x = 0;
+            if (d.y < 0) d.y = H; else if (d.y > H) d.y = 0;
+            ctx.fillRect(d.x, d.y, d.size, d.size);
+        }
+
+        for (let i = shockwaves.length - 1; i >= 0; i--) {
+            const sw = shockwaves[i];
+            sw.radius += 5.5; sw.age += dt;
+            if (sw.age > 1500) shockwaves.splice(i, 1);
+        }
+
+        const mActive = mouse.active;
+        const mx = mouse.x, my = mouse.y;
+        const mouseR2 = CFG.mouseRadius * CFG.mouseRadius;
+        const swCount = shockwaves.length;
+
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            let coh = 0;
+            const dxA = p.x - obsX, dyA = p.y - obsY;
+            const dA2 = dxA * dxA + dyA * dyA;
+            if (dA2 < obsR2) { const k = 1 - Math.sqrt(dA2) / obsR; coh = k * k; }
+            if (mActive) {
+                const dxM = p.x - mx, dyM = p.y - my;
+                const dM2 = dxM * dxM + dyM * dyM;
+                if (dM2 < mouseR2) { const k = 1 - Math.sqrt(dM2) / CFG.mouseRadius; const v = k * k; if (v > coh) coh = v; }
+            }
+            for (let s = 0; s < swCount; s++) {
+                const sw = shockwaves[s];
+                const dxS = p.x - sw.x, dyS = p.y - sw.y;
+                const dS = Math.sqrt(dxS * dxS + dyS * dyS);
+                const band = Math.abs(dS - sw.radius);
+                if (band < 55) { const k = (1 - band / 55) * (1 - sw.age / 1500); if (k > coh) coh = k; }
+            }
+            p.memory = Math.max(p.memory * CFG.memoryDecay, coh);
+            const phase1 = t * 0.0008 + p.seed;
+            const noiseOffX = Math.sin(phase1) * 42 + Math.cos(phase1 * 1.7) * 20;
+            const noiseOffY = Math.cos(phase1 * 1.3) * 42 + Math.sin(phase1 * 2.1) * 20;
+            const disp = 1 - p.memory;
+            const targetX = p.homeX + noiseOffX * disp;
+            const targetY = p.homeY + noiseOffY * disp;
+            const stiffness = 0.10 + p.memory * 0.10;
+            p.vx = p.vx * 0.85 + (targetX - p.x) * stiffness;
+            p.vy = p.vy * 0.85 + (targetY - p.y) * stiffness;
+            p.x += p.vx; p.y += p.vy;
+            const m = p.memory;
+            const alpha = (0.07 + m * 0.88) * fadeIn;
+            const sz = p.size * (1 + m * 1.4);
+            const cr = (C.base[0] + (C.accent[0] - C.base[0]) * m) | 0;
+            const cg = (C.base[1] + (C.accent[1] - C.base[1]) * m) | 0;
+            const cb = (C.base[2] + (C.accent[2] - C.base[2]) * m) | 0;
+            ctx.fillStyle = 'rgba(' + cr + ',' + cg + ',' + cb + ',' + alpha.toFixed(3) + ')';
+            if (sz < 1.2) ctx.fillRect(p.x - sz * 0.5, p.y - sz * 0.5, sz, sz);
+            else { ctx.beginPath(); ctx.arc(p.x, p.y, sz, 0, Math.PI * 2); ctx.fill(); }
+        }
+
+        for (let s = 0; s < swCount; s++) {
+            const sw = shockwaves[s];
+            const o = 1 - sw.age / 1500;
+            if (o <= 0) continue;
+            ctx.strokeStyle = 'rgba(251,126,74,' + (0.35 * o * fadeIn).toFixed(3) + ')';
+            ctx.lineWidth = 1.6 * o + 0.3;
+            ctx.beginPath(); ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2); ctx.stroke();
+        }
+
+        ctx.strokeStyle = 'rgba(251,126,74,' + (C.ringA * fadeIn).toFixed(3) + ')';
+        ctx.lineWidth = 0.8; ctx.setLineDash([2, 14]);
+        ctx.beginPath(); ctx.arc(obsX, obsY, obsR, 0, Math.PI * 2); ctx.stroke();
+        if (mActive) {
+            ctx.strokeStyle = 'rgba(251,126,74,' + (C.ringA * 0.55 * fadeIn).toFixed(3) + ')';
+            ctx.lineWidth = 0.7; ctx.setLineDash([2, 12]);
+            ctx.beginPath(); ctx.arc(mx, my, CFG.mouseRadius, 0, Math.PI * 2); ctx.stroke();
+        }
+        ctx.setLineDash([]);
+
+        const startX = W * CFG.maskStart;
+        const endX = W * CFG.maskEnd;
+        const mask = ctx.createLinearGradient(0, 0, endX, 0);
+        mask.addColorStop(0, 'rgba(0,0,0,1)');
+        mask.addColorStop(Math.min(1, startX / endX), 'rgba(0,0,0,1)');
+        mask.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.globalCompositeOperation = 'destination-in';
+        ctx.fillStyle = mask; ctx.fillRect(0, 0, W, H);
+        ctx.globalCompositeOperation = 'source-over';
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+    requestAnimationFrame(frame);
+    })();
     </script>
-
-    <!-- ── ANIMATION SCRIPT (left side only, 20% width, maxCap 27) ── -->
-    <script>
-        if (window.innerWidth <= 768) {
-            // Mobile: no animation at all
-            document.getElementById('gameCanvas').style.display = 'none';
-        }
-        else {
-        // ... your entire existing animation script goes here ...
-
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        function getLeftWidth() {
-            const w = window.innerWidth * 0.20;
-            return Math.min(Math.max(w, 160), 400);
-        }
-        let leftWidth = getLeftWidth();
-
-        let bgColor, watermarkRGB;
-        const tealRGB = '0, 139, 139';
-
-        function updateColors() {
-            if (document.body.classList.contains('dark-mode')) {
-                bgColor = '#121212';
-                watermarkRGB = '255, 255, 255';
-            } else {
-                bgColor = '#ffffff';
-                watermarkRGB = '0, 0, 0';
-            }
-        }
-        updateColors();
-
-        toggleBtn.addEventListener('click', updateColors);
-
-        function drawBackground() {
-            ctx.fillStyle = bgColor;
-            ctx.fillRect(0, 0, leftWidth, canvas.height);
-            ctx.fillStyle = `rgba(${watermarkRGB}, 0.10)`;
-            const gridSize = 10;
-            for (let x = 0; x < leftWidth; x += gridSize) {
-                for (let y = 0; y < canvas.height; y += gridSize) {
-                    ctx.fillRect(x - 1, y - 1, 2, 2);
-                }
-            }
-        }
-
-        class RoboticDot {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.step = 10;
-                this.size = 3;
-                this.dir = Math.floor(Math.random() * 4);
-                this.move_timer = 0;
-                this.is_dying = false;
-                this.death_opacity = 1.0;
-                this.startDying = collapseTime + Math.random() * 800;
-            }
-
-            update() {
-                if (this.is_dying) {
-                    this.death_opacity -= 0.01;
-                    if (this.death_opacity <= 0) return true;
-                } else {
-                    this.move_timer++;
-                    if (this.move_timer >= 10) {
-                        this.move_timer = 0;
-                        if (Math.random() < 0.03) {
-                            this.dir = (this.dir + (Math.random() < 0.5 ? 1 : 3)) % 4;
-                        }
-                        if (this.dir === 0) this.y -= this.step;
-                        else if (this.dir === 1) this.x += this.step;
-                        else if (this.dir === 2) this.y += this.step;
-                        else if (this.dir === 3) this.x -= this.step;
-                        if (this.x > leftWidth) this.x = 0;
-                        if (this.x < 0) this.x = leftWidth;
-                        if (this.y > canvas.height) this.y = 0;
-                        if (this.y < 0) this.y = canvas.height;
-                    }
-                }
-                return false;
-            }
-
-            draw() {
-                const alpha = this.is_dying ? this.death_opacity : 1.0;
-                ctx.fillStyle = `rgba(${tealRGB}, ${alpha})`;
-                ctx.fillRect(this.x, this.y, this.size, this.size);
-            }
-        }
-
-        let dots = [];
-        let globalTime = 0;
-        const collapseTime = 2000;
-        const maxCap = 27;
-
-        for (let i = 0; i < 12; i++) {
-            dots.push(new RoboticDot(
-                Math.random() * leftWidth,
-                Math.random() * canvas.height
-            ));
-        }
-
-        function animate() {
-            globalTime++;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.save();
-            ctx.beginPath();
-            ctx.rect(0, 0, leftWidth, canvas.height);
-            ctx.clip();
-            drawBackground();
-
-            if (globalTime < collapseTime) {
-                for (let i = dots.length - 1; i >= 0; i--) {
-                    const dead = dots[i].update();
-                    dots[i].draw();
-                    if (dots.length < maxCap && Math.random() < 0.005) {
-                        dots.push(new RoboticDot(dots[i].x, dots[i].y));
-                    }
-                    if (dead) dots.splice(i, 1);
-                }
-            } else {
-                for (let i = dots.length - 1; i >= 0; i--) {
-                    const dot = dots[i];
-                    if (globalTime > dot.startDying) {
-                        dot.is_dying = true;
-                    }
-                    const dead = dot.update();
-                    dot.draw();
-                    if (dead) dots.splice(i, 1);
-                }
-                if (dots.length === 0) {
-                    globalTime = 0;
-                    for (let i = 0; i < 12; i++) {
-                        dots.push(new RoboticDot(
-                            Math.random() * leftWidth,
-                            Math.random() * canvas.height
-                        ));
-                    }
-                }
-            }
-            ctx.restore();
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        window.addEventListener('resize', () => {
-            resizeCanvas();
-            leftWidth = getLeftWidth();
-            for (const dot of dots) {
-                if (dot.x > leftWidth) dot.x = leftWidth * 0.95;
-                if (dot.y > canvas.height) dot.y = canvas.height * 0.95;
-            }
-        });
-        }
-    </script>
-
 </body>
 </html>
