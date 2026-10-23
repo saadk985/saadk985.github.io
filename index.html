@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M. Saad Khan</title>
+    <style>
+        :root {
+            --text-main: #333333; --text-muted: #666666; --text-light: #999999;
+            --bg-main: #ffffff; --border-color: #eaeaea;
+            --accent-orange: #fb7e4a; --accent-bg: #f5f5f5;
+            --font-serif: "Georgia", "Times New Roman", serif;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: "Menlo", "Consolas", "Courier New", monospace;
+        }
+        html { scrollbar-gutter: stable; }
+        body.dark-mode {
+            --text-main: #e5e5e5; --text-muted: #a3a3a3; --text-light: #737373;
+            --bg-main: #121212; --border-color: #2e2e2e; --accent-bg: #1e1e1e;
+        }
+        body {
+            margin: 0; padding: 0; font-family: var(--font-serif);
+            background-color: var(--bg-main); color: var(--text-main);
+            line-height: 1.6; -webkit-font-smoothing: antialiased;
+            position: relative; z-index: 1; overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+        a { color: inherit; text-decoration: none; }
+        .nav-list li.has-tag { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        .nav-tag {
+            display: inline-block; margin-left: 6px; font-family: var(--font-mono);
+            font-size: 0.7rem; color: var(--text-light);
+            border: 1px solid var(--border-color); padding: 0.1rem 0.4rem;
+            border-radius: 2px; line-height: 1.4;
+        }
+        .nav-list li.has-tag a { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+
+        #gameCanvas {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: 0; pointer-events: none;
+            transition: opacity 0.8s ease;
+        }
+        @media (max-width: 768px) { #gameCanvas { display: none; } }
+
+        .container {
+            display: flex; max-width: 900px;
+            margin: 3.5rem auto 4.5rem auto; padding: 0 2rem;
+            gap: 4rem; position: relative; z-index: 1;
+        }
+        .sidebar {
+            width: 180px; flex-shrink: 0; position: sticky;
+            top: 2rem; align-self: flex-start;
+            max-height: calc(100vh - 4rem); overflow-y: auto;
+        }
+        .site-title { font-size: 1.05rem; margin-bottom: 2rem; color: var(--text-muted); }
+        .nav-list { list-style: none; padding: 0; margin: 0 0 0.5rem 0; }
+        .nav-list li { margin-bottom: 0.3rem; }
+        .nav-list a {
+            color: var(--text-muted); font-size: 0.95rem;
+            transition: color 0.2s; display: inline-block;
+            padding: 0.16rem 0; line-height: 1.4;
+        }
+        .nav-list a:hover { color: var(--text-main); }
+        .nav-icon { font-size: 0.8em; margin-left: 3px; }
+        .divider { border: none; border-top: 1px solid var(--border-color); margin: 2rem 0; }
+        .toggle-light {
+            display: flex; align-items: center; gap: 0.5rem;
+            color: var(--text-muted); font-size: 0.95rem; cursor: pointer;
+            background: none; border: none; padding: 0.5rem 0;
+            font-family: inherit; margin-top: 1.5rem;
+            position: relative; z-index: 2;
+        }
+        .main-content { flex-grow: 1; max-width: 650px; }
+        .mobile-site-title { display: none; }
+        .bio { font-size: 1.15rem; color: var(--text-muted); margin-bottom: 4.5rem; }
+        .bio a { text-decoration: underline; text-underline-offset: 3px; color: var(--text-muted); }
+        .section-label {
+            font-family: var(--font-mono); font-size: 0.75rem;
+            letter-spacing: 0.15em; color: var(--text-light);
+            text-transform: uppercase; margin-bottom: 2rem;
+        }
+        .article-list { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
+        .article-item { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+        .article-date {
+            font-family: var(--font-mono); font-size: 0.85rem;
+            color: var(--text-muted); width: 85px; flex-shrink: 0;
+        }
+        .article-title { font-size: 1.05rem; color: var(--text-main); flex-grow: 1; }
+        .article-item:hover { border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem; }
+        .article-tag {
+            font-family: var(--font-mono); font-size: 0.75rem;
+            color: var(--text-light); border: 1px solid var(--border-color);
+            padding: 0.15rem 0.4rem; border-radius: 2px;
+        }
+        .more-links { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+        .more-links a {
+            color: var(--text-main); text-decoration: underline;
+            text-underline-offset: 4px; font-size: 1.05rem; padding: 0.2rem 0;
+        }
+        .site-footer {
+            margin-top: 4.5rem; padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex; justify-content: space-between;
+            font-size: 0.85rem; color: var(--text-muted);
+            flex-wrap: wrap; gap: 1rem;
+        }
+
+        .hamburger {
+            display: none; flex-direction: column; justify-content: space-between;
+            width: 28px; height: 20px; background: transparent; border: none;
+            cursor: pointer; padding: 0; position: fixed; z-index: 100;
+        }
+        .hamburger span {
+            display: block; height: 2px; width: 100%; background: var(--text-main);
+            border-radius: 2px; transition: transform 0.3s ease, opacity 0.3s ease;
+            transform-origin: center;
+        }
+        .sidebar-open .hamburger span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .sidebar-open .hamburger span:nth-child(2) { opacity: 0; }
+        .sidebar-open .hamburger span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+
+        .sidebar-overlay {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh; background: rgba(0,0,0,0.4);
+            z-index: 49; opacity: 0; transition: opacity 0.3s ease;
+        }
+        .sidebar-overlay.active { display: block; opacity: 1; }
+
+        @media (max-width: 768px) {
+            .container { flex-direction: column; gap: 2rem; margin: 2rem auto; padding: 0 1.5rem; }
+            .sidebar .site-title { display: none; }
+            .mobile-site-title {
+                display: block; text-align: center; font-size: 1.2rem;
+                margin-bottom: 1.5rem; padding-right: 3.5rem; padding-left: 1rem;
+            }
+            .mobile-site-title a { color: var(--text-muted); }
+            .sidebar {
+                position: fixed; top: 0; left: 0; width: 250px; height: 100vh;
+                background: var(--bg-main); padding: 2rem 1.5rem;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+                z-index: 50; overflow-y: auto;
+                border-right: 1px solid var(--border-color);
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .sidebar-open .sidebar { transform: translateX(0); }
+            .hamburger { display: flex; right: 1.5rem; top: 2.6rem; }
+            .sidebar-open .hamburger { right: 1.5rem !important; top: 2.6rem !important; }
+            .more-links { display: none; }
+            .article-tag { display: none; }
+            .site-footer { justify-content: flex-start; }
+            .main-content { max-width: 100%; padding-top: 0.5rem; }
+            .article-item { flex-wrap: wrap; gap: 0.5rem; }
+            .article-title { width: 100%; order: 3; font-size: 1rem; }
+            .article-date { width: 70px; font-size: 0.8rem; }
+            .bio { font-size: 1.05rem; margin-bottom: 3rem; }
+        }
+        @media (max-width: 480px) {
+            .container { padding: 0 1rem; }
+            .mobile-site-title { font-size: 1.05rem; padding-right: 3rem; padding-left: 0.5rem; }
+            .nav-list a { font-size: 0.9rem; }
+            .toggle-light { font-size: 0.9rem; }
+            .bio { font-size: 0.95rem; }
+            .article-title { font-size: 0.95rem; }
+            .article-date { width: 60px; font-size: 0.75rem; }
+            .site-footer { font-size: 0.75rem; flex-direction: column; align-items: flex-start; text-align: left; }
+            .hamburger { right: 1rem; top: 2.2rem; }
+            .sidebar-open .hamburger { right: 1rem !important; top: 2.2rem !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+    </button>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <canvas id="gameCanvas"></canvas>
+
+    <div class="container">
+        <nav class="sidebar" id="sidebar">
+            <div class="site-title"><a href="/">M. Saad Khan</a></div>
+            <ul class="nav-list">
+                <li><a href="about">About</a></li>
+                <li><a href="field_notes">Field Notes</a></li>
+                <li><a href="longreads">Longreads</a></li>
+                <li><a href="research">Research</a></li>
+                <li><a href="read_picks">Read Picks</a></li>
+                <li><a href="rabbit-holes">Rabbit Holes</a></li>
+                <li class="has-tag"><a href="#"><span>Consultancy </span><span class="nav-tag">soon</span></a></li>
+                <li class="has-tag"><a href="#"><span>Book <span class="nav-icon">↗</span></span><span class="nav-tag">soon</span></a></li>
+                <li class="has-tag"><a href="#"><span>Course <span class="nav-icon">↗</span></span><span class="nav-tag">soon</span></a></li>
+            </ul>
+            <hr class="divider">
+            <ul class="nav-list">
+                <li><a href="https://www.linkedin.com/in/saad985/">LinkedIn <span class="nav-icon">↗</span></a></li>
+                <li><a href="https://substack.com/@saadk985">Substack <span class="nav-icon">↗</span></a></li>
+                <li><a href="mailto:msaadkhn985@gmail.com">Email <span class="nav-icon">↗</span></a></li>
+                <li><a href="https://github.com/saadk985">GitHub <span class="nav-icon">↗</span></a></li>
+            </ul>
+            <button class="toggle-light"><span>☾</span> Toggle Dark</button>
+        </nav>
+
+        <main class="main-content">
+            <div class="mobile-site-title"><a href="/">M. Saad Khan</a></div>
+            <div class="bio">Thoughts on Biology, Computer Science &amp; obviously on life.</div>
+            <div class="section-label">Recent Writing</div>
+
+            <div class="article-list">
+                <div class="article-item">
+                    <div class="article-date">2026.10.15</div>
+                    <a href="longreads/ownership" class="article-title">Who Owns a Discovery About You?</a>
+                    <div class="article-tag">Longreads</div>
+                </div>
+            </div>
+            <div class="article-list">
+                <div class="article-item">
+                    <div class="article-date">2026.09.29</div>
+                    <a href="field-notes/Gen-AI" class="article-title">Gen AI &amp; Expressivity Crisis</a>
+                    <div class="article-tag">Field Notes</div>
+                </div>
+            </div>
+            <div class="article-list">
+                <div class="article-item">
+                    <div class="article-date">2026.09.12</div>
+                    <a href="field-notes/Photographic-Education" class="article-title">Photographic Education &amp; The Way Out</a>
+                    <div class="article-tag">Field Notes</div>
+                </div>
+            </div>
+
+            <div class="more-links"><a href="resume.pdf">Resume &rarr;</a></div>
+
+            <footer class="site-footer"><div>&copy; 2026 M. Saad Khan</div></footer>
+        </main>
+    </div>
+
+    <!-- Theme toggle (OS-aware) -->
+    <script>
+    const toggleBtn = document.querySelector('.toggle-light');
+    const body = document.body;
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+    if (initialDark) {
+        body.classList.add('dark-mode');
+        toggleBtn.innerHTML = '<span>☀</span> Toggle White';
+    }
+    toggleBtn.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        toggleBtn.innerHTML = isDark ? '<span>☀</span> Toggle White' : '<span>☾</span> Toggle Dark';
+    });
+    </script>
+
+    <!-- Hamburger -->
+    <script>
+    const hamburger = document.getElementById('hamburgerBtn');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    function toggleSidebar(open) {
+        if (open === undefined) body.classList.toggle('sidebar-open');
+        else if (open) body.classList.add('sidebar-open');
+        else body.classList.remove('sidebar-open');
+    }
+    hamburger.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(); });
+    overlay.addEventListener('click', () => toggleSidebar(false));
+    sidebar.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => { if (window.innerWidth <= 768) toggleSidebar(false); });
+    });
+    </script>
+
+    <!-- ── THE LATENT FORM ──
+         A branching dendrite lives in the entire viewport.
+         It is only visible where it is being observed.
+         An autonomous eye drifts. Your cursor is a second eye.
+         Click releases a shockwave that reveals a widening ripple. -->
+    <script>
+    (function () {
+    'use strict';
+    const canvas = document.getElementById('gameCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d', { alpha: true });
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) { canvas.style.opacity = '0'; return; }
+
+    const CFG = {
+        dendriteParticles: 2400,
+        dustParticles: 260,
+        treeDepth: 6,
+        trunkCount: 3,
+        obsRadiusBase: 0.24,   // fraction of min(W,H)
+        mouseRadius: 170,
+        obsSpeed: 0.000155,
+        memoryDecay: 0.9935,
+    };
+
+    let W = 0, H = 0, DPR = 1, CX = 0, CY = 0, obsRadiusBase = 220;
+    let branches = [], particles = [], dust = [], shockwaves = [];
+    let obsX = 0, obsY = 0, obsR = 200;
+    let lastT = 0, fadeIn = 0;
+
+    /* ───── setup ───── */
+    function resize() {
+        DPR = Math.min(window.devicePixelRatio || 1, 2);
+        W = window.innerWidth;
+        H = window.innerHeight;
+        canvas.width = (W * DPR) | 0;
+        canvas.height = (H * DPR) | 0;
+        canvas.style.width = W + 'px';
+        canvas.style.height = H + 'px';
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        CX = W * 0.5;
+        CY = H * 0.5;
+        obsRadiusBase = Math.min(W, H) * CFG.obsRadiusBase;
+        build();
+    }
+
+    function build() {
+        buildDendrite();
+        buildParticles();
+        buildDust();
+    }
+
+    /* ───── the hidden tree ───── */
+    function buildDendrite() {
+        branches = [];
+        function grow(x, y, angle, length, depth, width, seed) {
+            const steps = Math.max(6, Math.floor(length / 7));
+            const pts = [];
+            for (let i = 0; i <= steps; i++) {
+                const t = i / steps;
+                const a = angle + Math.sin(t * Math.PI * 1.6 + seed) * 0.18;
+                const px = x + Math.cos(a) * length * t;
+                const py = y + Math.sin(a) * length * t;
+                pts.push({ x: px, y: py });
+            }
+            branches.push({ pts, width, depth });
+            const end = pts[pts.length - 1];
+            if (depth > 0) {
+                const nChildren = depth > 3 ? 2 : (Math.random() < 0.4 ? 3 : 2);
+                for (let i = 0; i < nChildren; i++) {
+                    const spread = (i - (nChildren - 1) / 2) * (0.5 + Math.random() * 0.2);
+                    const cAngle = angle + spread + (Math.random() - 0.5) * 0.25;
+                    const cLength = length * (0.64 + Math.random() * 0.16);
+                    grow(end.x, end.y, cAngle, cLength, depth - 1, width * 0.72, seed + i * 17);
+                }
+            }
+        }
+        for (let i = 0; i < CFG.trunkCount; i++) {
+            const startX = W * (0.18 + i * 0.32) + (Math.random() - 0.5) * 60;
+            const angle = -Math.PI / 2 + (i - (CFG.trunkCount - 1) / 2) * 0.32 + (Math.random() - 0.5) * 0.18;
+            const length = H * 0.30 + Math.random() * 70;
+            const width = 9 + Math.random() * 3;
+            grow(startX, H + 40, angle, length, CFG.treeDepth, width, i * 100);
+        }
+    }
+
+    function buildParticles() {
+        particles = [];
+        let totalW = 0;
+        for (const b of branches) totalW += b.width * b.width;
+        for (const br of branches) {
+            const weight = (br.width * br.width) / totalW;
+            const count = Math.max(2, Math.floor(weight * CFG.dendriteParticles));
+            for (let i = 0; i < count; i++) {
+                const t = Math.random();
+                const idx = Math.min(br.pts.length - 1, Math.floor(t * br.pts.length));
+                const pt = br.pts[idx];
+                const scatter = br.width * 0.42 + 1.4;
+                const a = Math.random() * Math.PI * 2;
+                const r = Math.sqrt(Math.random()) * scatter;
+                const hx = pt.x + Math.cos(a) * r;
+                const hy = pt.y + Math.sin(a) * r;
+                particles.push({
+                    homeX: hx, homeY: hy,
+                    x: hx + (Math.random() - 0.5) * 55,
+                    y: hy + (Math.random() - 0.5) * 55,
+                    vx: 0, vy: 0,
+                    seed: Math.random() * 1000,
+                    size: 0.4 + Math.random() * 0.9,
+                    memory: 0,
+                });
+            }
+        }
+    }
+
+    function buildDust() {
+        dust = [];
+        for (let i = 0; i < CFG.dustParticles; i++) {
+            dust.push({
+                x: Math.random() * W,
+                y: Math.random() * H,
+                vx: (Math.random() - 0.5) * 0.12,
+                vy: (Math.random() - 0.5) * 0.12,
+                size: 0.35 + Math.random() * 0.4,
+            });
+        }
+    }
+
+    /* ───── input ───── */
+    const mouse = { x: -9999, y: -9999, active: false };
+    window.addEventListener('pointermove', (e) => {
+        mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true;
+    }, { passive: true });
+    window.addEventListener('pointerleave', () => { mouse.active = false; });
+    window.addEventListener('blur', () => { mouse.active = false; });
+    window.addEventListener('pointerdown', (e) => {
+        if (W > 768 && !e.target.closest('a, button')) {
+            shockwaves.push({ x: e.clientX, y: e.clientY, radius: 0, age: 0 });
+        }
+    });
+
+    /* ───── colors ───── */
+    function palette() {
+        const dark = document.body.classList.contains('dark-mode');
+        return dark
+            ? { base: [128, 122, 112], accent: [255, 138, 92], dustA: 0.06, ringA: 0.15 }
+            : { base: [110, 100, 90],  accent: [251, 126, 74], dustA: 0.05, ringA: 0.15 };
+    }
+
+    /* ───── loop ───── */
+    function frame(t) {
+        requestAnimationFrame(frame);
+        if (W <= 768) return;
+
+        const dt = lastT ? Math.min(t - lastT, 50) : 16;
+        lastT = t;
+        fadeIn = Math.min(1, fadeIn + 0.015);
+
+        // Autonomous observer — Lissajous with a slow secondary drift so it
+        // doesn't retrace itself exactly
+        const phase = t * CFG.obsSpeed + Math.sin(t * 0.00022) * 2.1;
+        obsX = CX + Math.cos(phase * 1.31) * (W * 0.32);
+        obsY = CY + Math.sin(phase * 1.73) * (H * 0.34);
+        obsR = obsRadiusBase * (1 + Math.sin(t * 0.0005) * 0.12);
+        const obsR2 = obsR * obsR;
+
+        const C = palette();
+        ctx.clearRect(0, 0, W, H);
+
+        // Warm halo around the observation eye
+        const atm = ctx.createRadialGradient(obsX, obsY, 0, obsX, obsY, obsR * 1.35);
+        atm.addColorStop(0, 'rgba(251,126,74,' + (0.055 * fadeIn).toFixed(3) + ')');
+        atm.addColorStop(1, 'rgba(251,126,74,0)');
+        ctx.fillStyle = atm;
+        ctx.fillRect(obsX - obsR * 1.35, obsY - obsR * 1.35, obsR * 2.7, obsR * 2.7);
+
+        // Dust (always visible background texture)
+        const dustCol = 'rgba(' + C.base[0] + ',' + C.base[1] + ',' + C.base[2] + ',' + (C.dustA * fadeIn).toFixed(3) + ')';
+        ctx.fillStyle = dustCol;
+        for (let i = 0; i < dust.length; i++) {
+            const d = dust[i];
+            d.x += d.vx; d.y += d.vy;
+            if (d.x < 0) d.x = W; else if (d.x > W) d.x = 0;
+            if (d.y < 0) d.y = H; else if (d.y > H) d.y = 0;
+            ctx.fillRect(d.x, d.y, d.size, d.size);
+        }
+
+        // Advance shockwaves
+        for (let i = shockwaves.length - 1; i >= 0; i--) {
+            const sw = shockwaves[i];
+            sw.radius += 5.5;
+            sw.age += dt;
+            if (sw.age > 1500) shockwaves.splice(i, 1);
+        }
+
+        // Update + draw particles
+        const mActive = mouse.active;
+        const mx = mouse.x, my = mouse.y;
+        const mouseR2 = CFG.mouseRadius * CFG.mouseRadius;
+        const swCount = shockwaves.length;
+
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            let coh = 0;
+
+            // Auto observer coherence (quadratic falloff inside obsR)
+            const dxA = p.x - obsX, dyA = p.y - obsY;
+            const dA2 = dxA * dxA + dyA * dyA;
+            if (dA2 < obsR2) {
+                const k = 1 - Math.sqrt(dA2) / obsR;
+                coh = k * k;
+            }
+
+            // Cursor coherence (secondary observer)
+            if (mActive) {
+                const dxM = p.x - mx, dyM = p.y - my;
+                const dM2 = dxM * dxM + dyM * dyM;
+                if (dM2 < mouseR2) {
+                    const k = 1 - Math.sqrt(dM2) / CFG.mouseRadius;
+                    const v = k * k;
+                    if (v > coh) coh = v;
+                }
+            }
+
+            // Shockwave coherence (band-pass ring)
+            for (let s = 0; s < swCount; s++) {
+                const sw = shockwaves[s];
+                const dxS = p.x - sw.x, dyS = p.y - sw.y;
+                const dS = Math.sqrt(dxS * dxS + dyS * dyS);
+                const band = Math.abs(dS - sw.radius);
+                if (band < 55) {
+                    const k = (1 - band / 55) * (1 - sw.age / 1500);
+                    if (k > coh) coh = k;
+                }
+            }
+
+            // Fade-out memory: structure lingers briefly after observation moves on
+            p.memory = Math.max(p.memory * CFG.memoryDecay, coh);
+
+            // Target position — the tree is "true", noise is a wobble that fades
+            // as memory rises
+            const phase1 = t * 0.0008 + p.seed;
+            const noiseOffX = Math.sin(phase1) * 42 + Math.cos(phase1 * 1.7) * 20;
+            const noiseOffY = Math.cos(phase1 * 1.3) * 42 + Math.sin(phase1 * 2.1) * 20;
+            const disp = 1 - p.memory;
+            const targetX = p.homeX + noiseOffX * disp;
+            const targetY = p.homeY + noiseOffY * disp;
+
+            // Inertial follow — stronger pull when coherent
+            const stiffness = 0.10 + p.memory * 0.10;
+            p.vx = p.vx * 0.85 + (targetX - p.x) * stiffness;
+            p.vy = p.vy * 0.85 + (targetY - p.y) * stiffness;
+            p.x += p.vx;
+            p.y += p.vy;
+
+            // Color + alpha driven by memory
+            const m = p.memory;
+            const alpha = (0.07 + m * 0.88) * fadeIn;
+            const sz = p.size * (1 + m * 1.4);
+
+            const cr = (C.base[0] + (C.accent[0] - C.base[0]) * m) | 0;
+            const cg = (C.base[1] + (C.accent[1] - C.base[1]) * m) | 0;
+            const cb = (C.base[2] + (C.accent[2] - C.base[2]) * m) | 0;
+
+            ctx.fillStyle = 'rgba(' + cr + ',' + cg + ',' + cb + ',' + alpha.toFixed(3) + ')';
+            if (sz < 1.2) {
+                ctx.fillRect(p.x - sz * 0.5, p.y - sz * 0.5, sz, sz);
+            } else {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, sz, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // Draw shockwave rings (the visible "measurement pulse")
+        for (let s = 0; s < swCount; s++) {
+            const sw = shockwaves[s];
+            const o = 1 - sw.age / 1500;
+            if (o <= 0) continue;
+            ctx.strokeStyle = 'rgba(251,126,74,' + (0.35 * o * fadeIn).toFixed(3) + ')';
+            ctx.lineWidth = 1.6 * o + 0.3;
+            ctx.beginPath();
+            ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+
+        // Observation ring (subtle "measurement apparatus" indicator)
+        ctx.strokeStyle = 'rgba(251,126,74,' + (C.ringA * fadeIn).toFixed(3) + ')';
+        ctx.lineWidth = 0.8;
+        ctx.setLineDash([2, 14]);
+        ctx.beginPath();
+        ctx.arc(obsX, obsY, obsR, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // Cursor ring (very faint — hints at "you are also an observer")
+        if (mActive) {
+            ctx.strokeStyle = 'rgba(251,126,74,' + (C.ringA * 0.55 * fadeIn).toFixed(3) + ')';
+            ctx.lineWidth = 0.7;
+            ctx.setLineDash([2, 12]);
+            ctx.beginPath();
+            ctx.arc(mx, my, CFG.mouseRadius, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+        ctx.setLineDash([]);
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+    requestAnimationFrame(frame);
+    })();
+    </script>
+</body>
+</html>
