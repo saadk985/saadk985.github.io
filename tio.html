@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Ten questions about evidence in computational biology. A philosophy of inference without ground truth, written for practitioners.">
+<meta property="og:type" content="book">
+<meta property="og:title" content="The Inferred Organism">
+<meta property="og:description" content="Ten questions about evidence in computational biology.">
+<title>The Inferred Organism</title>
+<style>
+:root{--bg:#f4f1ea;--fg:#1d1b17;--mut:#6a6358;--acc:#a8431a;--line:#dcd5c6;--hov:#ebe6da;--dot:#1d1b17;color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e0d0c;--fg:#ece7dc;--mut:#a39c90;--acc:#ff8a5c;--line:#2a2722;--hov:#1a1816;--dot:#ece7dc;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e0d0c;--fg:#ece7dc;--mut:#a39c90;--acc:#ff8a5c;--line:#2a2722;--hov:#1a1816;--dot:#ece7dc;color-scheme:dark}
+*{box-sizing:border-box}
+
+/* ── the page: one hero screen, then a normal scrolling document ── */
+html{height:100%;scroll-snap-type:y proximity}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+html,body{margin:0;background:var(--bg);color:var(--fg)}
+body{font:17px/1.65 Georgia,"Times New Roman",serif;min-height:100%}
+
+.page{width:min(700px,calc(100% - 52px));margin:0 auto;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+
+/* the first screen behaves like a slide; everything after it scrolls */
+.top{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;scroll-snap-align:start}
+header{flex:0 0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 0 8px}
+.hero{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;padding:6px 0 30px}
+main{display:block;scroll-snap-align:start;padding:30px 0 40px}
+
+/* ── type ──────────────────────────────────────────────────────── */
+.ui,header,.part,.tag,.legend,button,.foot,figcaption{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.brand{font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);text-decoration:none}
+button{border:1px solid var(--line);border-radius:3px;background:transparent;color:var(--fg);padding:8px 11px;font-size:13px;cursor:pointer}
+a{color:var(--acc)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+h1{font-size:clamp(2.5rem,9vw,4.8rem);line-height:1;letter-spacing:-.05em;font-weight:400;margin:34px 0 14px}
+h1 i{color:var(--acc)}
+h2{font-size:2rem;line-height:1.2;font-weight:400;letter-spacing:-.02em;margin:22px 0 6px}
+h3{font:600 .8rem system-ui,sans-serif;text-transform:uppercase;letter-spacing:.1em;color:var(--acc);margin:1.6rem 0 .4rem}
+.sub{color:var(--mut);font-style:italic;margin:0 0 14px}
+
+.plate{margin:22px 0 0}
+#pl{display:block;width:100%;height:auto;max-height:56vh;touch-action:pan-y}
+#d circle{fill:var(--dot)}
+#d{transform-origin:400px 360px;animation:br 16s ease-in-out infinite}
+@keyframes br{50%{transform:scale(1.014)}}
+.ct{fill:none;stroke:var(--acc);stroke-width:1.2;stroke-dasharray:2 7;stroke-linecap:round;opacity:.75}
+.n{cursor:pointer}
+.n .c{fill:var(--bg);stroke:var(--mut);stroke-width:1.5}
+.n.pub .c{fill:var(--acc);stroke:var(--acc)}
+.n .r{fill:none;stroke:var(--acc);stroke-width:1;opacity:0;transition:opacity .2s}
+.n.on .r{opacity:1}
+.n text{font:11px system-ui,sans-serif;fill:var(--mut);text-anchor:middle}
+figcaption{font-size:12.5px;color:var(--mut);line-height:1.55;margin-top:6px}
+#info{min-height:3.6em;margin:14px 0 0;font-size:15.5px}
+#info b{font:600 12px system-ui,sans-serif;letter-spacing:.1em;color:var(--acc);margin-right:8px}
+#info em{color:var(--mut)}
+
+.thesis{font-size:1.1rem;margin:0 0 22px}
+.who{color:var(--mut);margin:0 0 10px}
+.part{padding:20px 0 6px;color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.12em}
+ol.toc{list-style:none;margin:0;padding:0}
+.ch{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:12px;padding:12px 8px;margin:0 -8px;border-bottom:1px solid var(--line);color:var(--fg);text-decoration:none;border-radius:2px}
+a.ch:hover,li.hl>.ch{background:var(--hov)}
+.soon{color:var(--mut)}
+.num{color:var(--acc);font:14px system-ui,sans-serif;padding-top:2px}
+.name{display:block;font-size:18px;line-height:1.3}
+.claim{display:block;font-size:14.5px;color:var(--mut);font-style:italic;margin-top:3px;line-height:1.45}
+.tag{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--mut);border:1px solid var(--line);border-radius:3px;padding:2px 6px;align-self:start;white-space:nowrap}
+.tag.on{color:var(--acc);border-color:var(--acc)}
+.box{border-left:3px solid var(--acc);background:var(--hov);padding:.1rem 1rem;margin:1.2rem 0;border-radius:0 6px 6px 0;font-size:15px}
+.legend{font-size:13.5px;color:var(--mut);line-height:1.55}
+
+.foot{display:flex;align-items:center;justify-content:space-between;gap:14px;
+  font-size:11.5px;color:var(--mut);border-top:1px solid var(--line);
+  margin-top:6px;padding:9px 0 10px;line-height:1.4}
+
+@media(max-width:480px){.ch{grid-template-columns:26px minmax(0,1fr)}.tag{grid-column:2;justify-self:start}.foot{font-size:10.5px}}
+@media(prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  html{scroll-behavior:auto!important}
+}
+@media print{
+  .foot,header,.plate{display:none!important}
+  html{scroll-snap-type:none}
+  body{background:#fff;color:#000}
+  .page{width:auto}
+  .top{min-height:0}
+  main{padding:0}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="top" id="top">
+<header>
+  <a class="brand" href="#top">Inferred Organism</a>
+  <button id="tg" type="button" aria-pressed="false">☾ Dark</button>
+</header>
+
+<section class="hero">
+  <h1>The <i>Inferred</i> Organism</h1>
+  <p class="sub">Ten questions about evidence in computational biology</p>
+  <figure class="plate">
+    <svg id="pl" viewBox="0 0 800 720" aria-hidden="true"><g id="d"></g><g id="cg"></g><g id="nd"></g></svg>
+    <figcaption>The organism is not drawn. Each point is an observation, and ten of them are chapters. The dashed outline is a hypothesis fitted through those ten. It stays a hypothesis until the evidence is in.</figcaption>
+  </figure>
+  <p id="info" aria-live="polite"></p>
+</section>
+</div>
+
+<main id="contents">
+  <p class="thesis">Every output of a pipeline is a shadow of an organism nobody can observe directly. This book is about how we license claims about it.</p>
+  <div id="toc"></div>
+  <div class="box legend"><strong>Every chapter has the same anatomy:</strong> a live controversy · the philosophical tools that sharpen it · a small simulation · a Monday-morning rule · open problems.</div>
+  <div class="box legend"><strong>An open book:</strong> Challenge a claim, add a case, or propose a counterexample through issue templates. Each chapter reviewed by a philosopher of science and a practitioner, to be named.</div>
+</main>
+
+<div class="foot"><span>License: CC BY 4.0</span></div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s),NS='http://www.w3.org/2000/svg';
+const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
+
+/* ── the ten chapters ─────────────────────────────────────────────── */
+const P=[
+['I · From organism to data',[['01','What Counts as a Result?','A result is a claim plus a check that could have embarrassed it.','ch1'],['02','Is Data Ever Raw?','Every dataset arrives pre-interpreted by instruments, pipelines and annotations that copied each other.'],['03','What Is a Cell Type?','A cluster is evidence about a cell type, never its definition.']]],
+['II · From data to model',[['04','Why Are False Models Still Useful?','A model’s falsity matters only relative to the question it is asked.'],['05','Prediction or Understanding?','Predicting an outcome and explaining it are different achievements, and one can be had without the other.']]],
+['III · From model to evidence',[['06','What Does a Benchmark Prove?','A benchmark measures agreement with a proxy, not truth.'],['07','Is a Simulation an Experiment?','A simulation is an experiment on a model, and becomes evidence about the world only through a bridge you must defend.'],['08','What Counts as Causal Evidence In Silico?','Without intervention in the world, in silico causal claims remain hypotheses.']]],
+['IV · From evidence to claim',[['09','What Would a Virtual Cell Have to Be?','A virtual cell must be defined by the questions it can answer and the ways it can be wrong.'],['10','Whose Biology Do Models Describe?','Models describe the populations that were measured, and silence about the others is a claim too.']]]];
+const C=P.flatMap(p=>p[1]);
+
+/* chapters with a page get a real link to their own document */
+const row=([n,t,c,id,st],i)=>{
+  const tag=`<span class="tag${id?' on':''}">${id?st||'draft':'forthcoming'}</span>`,
+        b=`<span class="num">${n}</span><span><span class="name">${t}</span>${c?`<span class="claim">${c}</span>`:''}</span>${tag}`,
+        di=i>=0?` data-i="${i}"`:'';
+  return id?`<li${di}><a class="ch" href="${id}.html">${b}</a></li>`:`<li${di} class="ch soon">${b}</li>`};
+
+(function(){
+  let k=0,G=[];
+  G.push(`<div class="toc-group"><div class="part">Front matter</div><ol class="toc">${row(['—','Preface: why this book exists','','preface'],-1)}</ol></div>`);
+  P.forEach(([h,rs])=>{G.push(`<div class="toc-group"><div class="part">${h}</div><ol class="toc">${rs.map(r=>row(r,k++)).join('')}</ol></div>`)});
+  G.push(`<div class="toc-group"><div class="part">Back matter</div><ol class="toc">${[['A','Appendix: the Evidence Statement','','evidence','v0.1'],['B','Appendix: glossary'],['C','Appendix: reading lists by chapter']].map(r=>row(r,-1)).join('')}</ol></div>`);
+  const t=document.getElementById('toc');
+  t.insertAdjacentHTML('beforebegin',G.join(''));
+  t.remove();
+})();
+
+/* ── the plate: a hidden organism, observed only as scattered points ── */
+let sd=11;const rnd=()=>(sd=sd*16807%2147483647)/2147483647;
+const CX=400,CY=360,Rs=t=>290*(1+.1*Math.cos(3*t+.6)+.06*Math.sin(5*t));
+const g=$('#d'),D=[];
+for(let i=0;i<520;i++){
+  const t=rnd()*6.2832,m=i%10,
+        r=m<6?Rs(t)*(.9+.1*rnd()):m<9?Rs(t)*.35*Math.sqrt(rnd()):Rs(t)*(1.05+.2*rnd()),
+        x=CX+r*Math.cos(t),y=CY+r*Math.sin(t),r0=1.1+rnd()*1.1,o=.28+rnd()*.3;
+  D.push([el('circle',{cx:x.toFixed(1),cy:y.toFixed(1),r:r0.toFixed(1),opacity:o.toFixed(2)},g),x,y,r0,o]);
+}
+const sp=Q=>{const n=Q.length;let d=`M${Q[0][0]},${Q[0][1]}`;for(let i=0;i<n;i++){const a=Q[(i-1+n)%n],b=Q[i],c=Q[(i+1)%n],e=Q[(i+2)%n];d+=`C${b[0]+(c[0]-a[0])/6},${b[1]+(c[1]-a[1])/6} ${c[0]-(e[0]-b[0])/6},${c[1]-(e[1]-b[1])/6} ${c[0]},${c[1]}`}return d+'Z'};
+
+const basePts=[],nodeGroups=[];
+C.forEach((c,i)=>{
+  const t=-2.1+i*.62832,r=Rs(t)*.95,x=CX+r*Math.cos(t),y=CY+r*Math.sin(t);
+  basePts.push({t,r,x,y});
+  const n=el('g',{class:'n'+(c[3]?' pub':''),'data-i':i},$('#nd'));
+  el('circle',{class:'r',cx:x,cy:y,r:15},n);
+  el('circle',{class:'c',cx:x,cy:y,r:6},n);
+  el('text',{x:CX+(r+26)*Math.cos(t),y:CY+(r+26)*Math.sin(t)+4},n).textContent=c[0];
+  n.onpointerenter=()=>hi(i);
+  n.onclick=()=>{if(c[3]) location.href=c[3]+'.html';};
+  nodeGroups.push(n);
+});
+const ctPath=el('path',{d:sp(basePts.map(p=>[p.x,p.y])),class:'ct'},$('#cg'));
+
+const rmq=matchMedia('(prefers-reduced-motion: reduce)');
+let wobbleRaf=0;
+function drawWobble(now){
+  const wpts=basePts.map((p,i)=>{
+    const radial=9.5*Math.sin(now*0.0007-i*0.85)+4.2*Math.sin(now*0.0011+i*1.4);
+    const r=p.r+radial,x=CX+r*Math.cos(p.t),y=CY+r*Math.sin(p.t);
+    nodeGroups[i].setAttribute('transform','translate('+(x-p.x).toFixed(2)+','+(y-p.y).toFixed(2)+')');
+    return [x,y];
+  });
+  ctPath.setAttribute('d',sp(wpts));
+  wobbleRaf=requestAnimationFrame(drawWobble);
+}
+function startWobble(){ if(!wobbleRaf) wobbleRaf=requestAnimationFrame(drawWobble); }
+function stopWobble(){
+  if(wobbleRaf){cancelAnimationFrame(wobbleRaf);wobbleRaf=0;}
+  ctPath.setAttribute('d',sp(basePts.map(p=>[p.x,p.y])));
+  nodeGroups.forEach(n=>n.removeAttribute('transform'));
+}
+if(!rmq.matches) startWobble();
+rmq.addEventListener('change',e=>e.matches?stopWobble():startWobble());
+
+const DEF='Move across the field. Ten of these points are chapters.';
+function hi(i){
+  document.querySelectorAll('.n').forEach(n=>n.classList.toggle('on',+n.dataset.i===i));
+  document.querySelectorAll('main li[data-i]').forEach(l=>l.classList.toggle('hl',+l.dataset.i===i));
+  const c=C[i],box=$('#info');
+  if(box) box.innerHTML=c?`<b>${c[0]}</b>${c[1]}<br><em>${c[2]}</em>${c[3]?'':' <em>· forthcoming</em>'}`:`<em>${DEF}</em>`;
+}
+const contentsSec=$('#contents');
+contentsSec.addEventListener('pointerover',e=>{const l=e.target.closest('li[data-i]');if(l)hi(+l.dataset.i)});
+contentsSec.addEventListener('pointerleave',()=>hi(-1));
+
+const pl=$('#pl');let f=0,mx=-999,my=-999;
+function lens(){f=0;for(const[d,x,y,r0,o]of D){const q=Math.pow(Math.max(0,1-Math.hypot(x-mx,y-my)/110),2);d.setAttribute('r',(r0*(1+2.4*q)).toFixed(2));d.setAttribute('opacity',(o+(1-o)*q).toFixed(2))}}
+pl.addEventListener('pointermove',e=>{const b=pl.getBoundingClientRect();mx=(e.clientX-b.left)*800/b.width;my=(e.clientY-b.top)*720/b.height;if(!f)f=requestAnimationFrame(lens)});
+pl.addEventListener('pointerleave',()=>{mx=my=-999;lens();hi(-1)});
+
+/* ── theme ─────────────────────────────────────────────────────── */
+const R=document.documentElement,B=$('#tg');
+const dark=()=>R.dataset.theme?R.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+function lab(){B.textContent=dark()?'☼ Light':'☾ Dark';B.setAttribute('aria-pressed',String(dark()))}
+try{const s=localStorage.getItem('inferred-theme');if(s)R.dataset.theme=s}catch(e){}
+lab();
+B.addEventListener('click',()=>{const n=dark()?'light':'dark';R.dataset.theme=n;try{localStorage.setItem('inferred-theme',n)}catch(e){}lab()});
+</script>
+</body>
+</html>
