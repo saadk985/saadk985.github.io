@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Read Picks - M. Saad Khan</title>
+    <title>Field Notes - M. Saad Khan</title>
     <style>
         :root {
             --text-main: #333333; --text-muted: #666666; --text-light: #999999;
@@ -88,19 +88,24 @@
             .mobile-topbar .hamburger { position: static; display: flex; }
         }
         .mobile-site-title { display: none; }
-        .prose { margin-bottom: 5rem; }
-        .prose p {
-            font-size: 1.05rem; color: var(--text-main);
-            margin-bottom: 2rem; line-height: 1.7;
-        }
-        .prose a {
-            text-decoration: underline; text-underline-offset: 3px;
-            color: var(--text-main);
-        }
         .section-label {
             font-family: var(--font-mono); font-size: 0.75rem;
             letter-spacing: 0.15em; color: var(--text-light);
-            text-transform: uppercase; margin-bottom: 2.5rem;
+            text-transform: uppercase; margin-bottom: 2rem;
+        }
+        .article-list { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
+        .article-item { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+        .article-date {
+            font-family: var(--font-mono); font-size: 0.85rem;
+            color: var(--text-muted); width: 85px; flex-shrink: 0;
+        }
+        .article-coming { font-size: 1.05rem; color: var(--text-muted); flex-grow: 1; }
+        .article-title { font-size: 1.05rem; color: var(--text-main); flex-grow: 1; }
+        .article-item:hover { border-bottom: 1px solid var(--border-color); padding-bottom: 0.2rem; }
+        .article-tag {
+            font-family: var(--font-mono); font-size: 0.75rem;
+            color: var(--text-light); border: 1px solid var(--border-color);
+            padding: 0.15rem 0.4rem; border-radius: 2px;
         }
         .site-footer {
             margin-top: 4.5rem; padding-top: 1.5rem;
@@ -148,15 +153,21 @@
             .sidebar-open .sidebar { transform: translateX(0); }
             .hamburger { display: flex; right: 1.5rem; top: 2.6rem; }
             .sidebar-open .hamburger { right: 1.5rem !important; top: 2.6rem !important; }
+            .article-tag { display: none; }
+            .site-footer { justify-content: flex-start; }
             .main-content { max-width: 100%; padding-top: 0.5rem; }
-            .prose p { font-size: 1rem; }
+            .article-item { flex-wrap: wrap; gap: 0.5rem; }
+            .article-title { width: 100%; order: 3; font-size: 1rem; }
+            .article-date { width: 70px; font-size: 0.8rem; }
         }
         @media (max-width: 480px) {
             .container { padding: 0 1rem; }
             .mobile-site-title { font-size: 1.05rem; padding-right: 3rem; padding-left: 0.5rem; }
             .nav-list a { font-size: 0.9rem; }
             .toggle-light { font-size: 0.9rem; }
-            .prose p { font-size: 0.95rem; }
+            .article-title { font-size: 0.95rem; }
+            .article-date { width: 60px; font-size: 0.75rem; }
+            .site-footer { font-size: 0.75rem; flex-direction: column; align-items: flex-start; text-align: left; }
             .hamburger { right: 1rem; top: 2.2rem; }
             .sidebar-open .hamburger { right: 1rem !important; top: 2.2rem !important; }
         }
@@ -173,9 +184,9 @@
             <ul class="nav-list">
                 <li><a href="about">About</a></li>
                 <li><a href="field_notes">Field Notes</a></li>
-                <li><a href="longreads">Long Reads</a></li>
+                <li><a href="longreads" class="active-link">Long Reads</a></li>
                 <li><a href="research">Research</a></li>
-                <li><a href="read_picks" class="active-link">Read Picks</a></li>
+                <li><a href="read_picks">Read Picks</a></li>
                 <li><a href="rabbit-holes">Rabbit Holes</a></li>
                 <li class="has-tag"><a href="#"><span>Consultancy </span><span class="nav-tag">soon</span></a></li>
                 <li class="has-tag"><a href="tio"><span>Book <span class="nav-icon">↗</span></span></a></li>
@@ -198,22 +209,29 @@
                     <span></span><span></span><span></span>
                 </button>
             </div>
-            <div class="section-label">Read Picks</div>
+            <div class="section-label">Field Notes</div>
 
-            <div class="prose">
-                <p>This section is an inspiration, I got from Nico McCarty's bookshelf. Books are our companion that shapes our thoughts, ideologies, and indirectly our actions as well.</p>
-                <p>My reading journey started from 8th grade, and the first novel I read was "A Tale of Two Cities." I like fiction, non-fiction, the philosophy genre. I'm a part of Islamabad-based book club as well.</p>
-                <p>Conventional expectation would be that I must have a personal physical library for sure but interestingly, this is not the case. I've mostly read books either through lending, in libraries, or through pdf. My laptop has its own e-library containing almost 300+ books.</p>
-                <p>Among those books, half of them are technical: Biology, Computer Science, Math. Since, I've mentioned in the <a href="about">About</a>, I do read but my collecting tendency is often more dominant. So, I've read somewhere around 50-60 books over the years. Embarrassing to confess, isn't?</p>
-                <p>My favorite book is "Siddhartha" in fiction, "Thinking in Systems: A Primer" in non-fiction, and in Philosophy genre, I'm including a fictional book that acts like a live-simulation of all the philosophical concepts: "The Brothers Karamazov. In philosophy, I find the concept of "Ubermensch" fascinating. If we stretch it further to discuss about Authors, I'm deeply impressed by the raw intensity of Sylvia Plath, explainability of Dostoevsky, philosophical concepts of Nietzsche but still at the end, I think what you enjoy to read also depends on your life phase. It's certainly possible that the book you like today may not align with you tomorrow due to changed circumstances. Among modern writers, I enjoy reading Yuval Noah Harari, Andy Weir, Fei-fei Li's writing was good as well. Recently, I regularly read notes, and articles, written by Tamara on Substack (Museguided). Mostly, my reading list contains classics or 1900s literature, so am not that much aware of the modern fictional books to begin with.</p>
-                <p>Below, I'm suggesting five books (excluding my favorites), which in my opinion everyone should read once in their life. I'm not going technical either since we will have a lot of ground to discuss these stuffs somewhere else. I don't wanna bomb you with dozens of books either as this in most cases makes the choice more complicated. Book choices are not stand-alone, rather imo, they complement each other.</p>
-                <ul>
-                    <li>The Unaccountability Machine by Dan Davies</li>
-                    <li>Fourty Rules of Love by Elif Shafak</li>
-                    <li>The Picture of Dorian Gray by Oscar Wilde</li>
-                    <li>Ulysses by James Joyce</li>
-                    <li>The Unabridged Journals of Syliva Plath</li>
-                </ul>
+            <div class="article-list">
+                <div class="article-item">
+                    <div class="article-date">--.--.--</div>
+                    <a href="#" class="article-coming">The Street That Stayed Still for 300 Million Years</a>
+                    <div class="article-tag">Field Notes</div>
+                </div>
+            </div>
+
+            <div class="article-list">
+                <div class="article-item">
+                    <div class="article-date">2026.09.29</div>
+                    <a href="field-notes/Gen-AI" class="article-title">Gen-AI & Expressivity Crisis</a>
+                    <div class="article-tag">Field Notes</div>
+                </div>
+            </div>
+            <div class="article-list">
+                <div class="article-item">
+                    <div class="article-date">2026.09.12</div>
+                    <a href="field-notes/Photographic-Education" class="article-title">Photographic Education % The Way Out</a>
+                    <div class="article-tag">Field Notes</div>
+                </div>
             </div>
 
             <footer class="site-footer"><div>&copy; 2026 M. Saad Khan</div></footer>
@@ -281,8 +299,7 @@
     function resize() {
         DPR = Math.min(window.devicePixelRatio || 1, 2);
         W = window.innerWidth; H = window.innerHeight;
-        canvas.width = (W * DPR) | 0;
-        canvas.height = (H * DPR) | 0;
+        canvas.width = (W * DPR) | 0; canvas.height = (H * DPR) | 0;
         canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
         ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
         CX = W * CFG.centerBias; CY = H * 0.5;
@@ -341,12 +358,9 @@
                 const hy = pt.y + Math.sin(a) * r;
                 particles.push({
                     homeX: hx, homeY: hy,
-                    x: hx + (Math.random() - 0.5) * 55,
-                    y: hy + (Math.random() - 0.5) * 55,
-                    vx: 0, vy: 0,
-                    seed: Math.random() * 1000,
-                    size: 0.4 + Math.random() * 0.9,
-                    memory: 0,
+                    x: hx + (Math.random() - 0.5) * 55, y: hy + (Math.random() - 0.5) * 55,
+                    vx: 0, vy: 0, seed: Math.random() * 1000,
+                    size: 0.4 + Math.random() * 0.9, memory: 0,
                 });
             }
         }
