@@ -128,7 +128,7 @@ const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.set
 
 /* ── the ten chapters ─────────────────────────────────────────────── */
 const P=[
-['I · From organism to data',[['01','What Counts as a Result?','A result is a claim plus a check that could have embarrassed it.','ch1'],['02','Is Data Ever Raw?','Every dataset arrives pre-interpreted by instruments, pipelines and annotations that copied each other.'],['03','What Is a Cell Type?','A cluster is evidence about a cell type, never its definition.']]],
+['I · From organism to data',[['01','What Counts as a Result?','A result is a claim plus a check that could have embarrassed it.'],['02','Is Data Ever Raw?','Every dataset arrives pre-interpreted by instruments, pipelines and annotations that copied each other.'],['03','What Is a Cell Type?','A cluster is evidence about a cell type, never its definition.']]],
 ['II · From data to model',[['04','Why Are False Models Still Useful?','A model’s falsity matters only relative to the question it is asked.'],['05','Prediction or Understanding?','Predicting an outcome and explaining it are different achievements, and one can be had without the other.']]],
 ['III · From model to evidence',[['06','What Does a Benchmark Prove?','A benchmark measures agreement with a proxy, not truth.'],['07','Is a Simulation an Experiment?','A simulation is an experiment on a model, and becomes evidence about the world only through a bridge you must defend.'],['08','What Counts as Causal Evidence In Silico?','Without intervention in the world, in silico causal claims remain hypotheses.']]],
 ['IV · From evidence to claim',[['09','What Would a Virtual Cell Have to Be?','A virtual cell must be defined by the questions it can answer and the ways it can be wrong.'],['10','Whose Biology Do Models Describe?','Models describe the populations that were measured, and silence about the others is a claim too.']]]];
@@ -143,9 +143,9 @@ const row=([n,t,c,id,st],i)=>{
 
 (function(){
   let k=0,G=[];
-  G.push(`<div class="toc-group"><div class="part">Front matter</div><ol class="toc">${row(['—','Preface: why this book exists','','preface'],-1)}</ol></div>`);
+  G.push(`<div class="toc-group"><div class="part">Front matter</div><ol class="toc">${row(['—','Preface: why this book exists','',''],-1)}</ol></div>`);
   P.forEach(([h,rs])=>{G.push(`<div class="toc-group"><div class="part">${h}</div><ol class="toc">${rs.map(r=>row(r,k++)).join('')}</ol></div>`)});
-  G.push(`<div class="toc-group"><div class="part">Back matter</div><ol class="toc">${[['A','Appendix: the Evidence Statement','','evidence','v0.1'],['B','Appendix: glossary'],['C','Appendix: reading lists by chapter']].map(r=>row(r,-1)).join('')}</ol></div>`);
+  G.push(`<div class="toc-group"><div class="part">Back matter</div><ol class="toc">${[['A','Appendix: the Evidence Statement','','',''],['B','Appendix: glossary'],['C','Appendix: reading lists by chapter']].map(r=>row(r,-1)).join('')}</ol></div>`);
   const t=document.getElementById('toc');
   t.insertAdjacentHTML('beforebegin',G.join(''));
   t.remove();
