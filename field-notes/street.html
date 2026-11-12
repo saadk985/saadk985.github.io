@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Street That Stayed Still for 300 Million Years - M. Saad Khan</title>
+    <style>
+        :root {
+            --text-main: #333333;
+            --text-muted: #666666;
+            --text-light: #999999;
+            --bg-main: #ffffff;
+            --border-color: #eaeaea;
+            --accent-orange: #fb7e4a;
+            --accent-bg: #f5f5f5;
+            --font-serif: "Georgia", "Times New Roman", serif;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: "Menlo", "Consolas", "Courier New", monospace;
+        }
+
+.article-header {
+    margin-bottom: 3rem;
+}
+
+.article-h1 {
+    font-family: var(--font-serif);
+    font-size: 1.9rem;
+    font-weight: normal;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--text-main);
+    margin: 0 0 1rem 0;
+}
+
+.article-meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    color: var(--text-light);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.article-meta .meta-dot {
+    margin: 0 0.5rem;
+    opacity: 0.6;
+}
+
+.article-tension {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.15rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    border-left: 2px solid var(--accent-orange);
+    padding-left: 1rem;
+    margin: 0;
+}
+
+.article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+}
+
+.article-tags span {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--text-light);
+    border: 1px solid var(--border-color);
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    text-transform: lowercase;
+}
+
+.article-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.article-nav a {
+    color: var(--text-muted);
+    transition: color 0.2s;
+}
+
+.article-nav a:hover {
+    color: var(--text-main);
+}
+
+.article-nav .nav-index {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+    .article-h1 { font-size: 1.5rem; }
+    .article-tension { font-size: 1.05rem; }
+    .article-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+    }
+}
+
+        figure {
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        figure img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border-radius: 4px;
+        }
+
+        figcaption {
+            margin-top: 8px;
+            font-size: 0.875rem;
+            color: #6b6b6b;
+        }
+
+        blockquote.substack-quote {
+            margin: 1.5rem 0;
+            padding: 4px 0 4px 18px;
+            border-left: 3px solid #292929;
+            font-style: italic;
+            font-size: 1.15rem;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        blockquote.substack-quote p {
+            margin: 0;
+        }
+
+        html {
+            scrollbar-gutter: stable;
+        }
+
+        body.dark-mode {
+            --text-main: #e5e5e5;
+            --text-muted: #a3a3a3;
+            --text-light: #737373;
+            --bg-main: #121212;
+            --border-color: #2e2e2e;
+            --accent-bg: #1e1e1e;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-serif);
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            z-index: 1;
+            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .nav-tag {
+            display: inline-block;
+            margin-left: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+            padding: 0.1rem 0.4rem;
+            border-radius: 2px;
+            line-height: 1.4;
+        }
+
+        .nav-list li.has-tag a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+        #gameCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            display: block;
+            transition: opacity 0.8s ease;
+        }
+        @media (max-width: 768px) {
+            #gameCanvas {
+                display: none;
+            }
+        }
+        .container {
+            display: flex;
+            max-width: 900px;
+            margin: 3.5rem auto 4.5rem auto;
+            padding: 0 2rem;
+            gap: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .sidebar {
+            width: 180px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 2rem;
+            align-self: flex-start;
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+
+        .site-title {
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 0.5rem 0;
+        }
+        .nav-list li {
+            margin-bottom: 0.3rem;
+        }
+        .nav-list a {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            display: inline-block;
+            padding: 0.16rem 0;
+            line-height: 1.4;
+        }
+        .nav-list a:hover {
+            color: var(--text-main);
+        }
+        .active-link {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+            color: var(--text-main) !important;
+        }
+        .nav-icon {
+            font-size: 0.8em;
+            margin-left: 3px;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 2rem 0;
+        }
+
+        .toggle-light {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.5rem 0;
+            font-family: inherit;
+            margin-top: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            max-width: 650px;
+        }
+    .mobile-topbar {
+        display: none;
+    }
+
+        @media (max-width: 768px) {
+            .mobile-topbar {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                position: sticky;
+                top: 0;
+                z-index: 60;
+                background: var(--bg-main);
+                border-bottom: 1px solid var(--border-color);
+                padding: 0.75rem 1.25rem;
+                margin: -2rem -1.5rem 1.5rem -1.5rem;
+            }
+
+            .mobile-topbar .brand {
+                font-family: var(--font-serif);
+                font-size: 1rem;
+            color: var(--text-muted);
+            }
+
+            .mobile-topbar .hamburger {
+                position: static;
+                display: flex;
+            }
+        }
+        .mobile-site-title {
+            display: none;
+        }
+
+        .prose {
+            margin-bottom: 5rem;
+        }
+        .prose p {
+            font-size: 1.05rem;
+            color: var(--text-main);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+        .prose a {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            color: var(--text-main);
+        }
+
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            color: var(--text-light);
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+        }
+
+        .site-footer {
+            margin-top: 4.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-start;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 28px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            position: fixed;
+            z-index: 100;
+            transition: none;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: var(--text-main);
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform-origin: center;
+        }
+
+        .sidebar-open .hamburger span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        .sidebar-open .hamburger span:nth-child(2) {
+            opacity: 0;
+        }
+        .sidebar-open .hamburger span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.4);
+            z-index: 49;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                gap: 2rem;
+                margin: 2rem auto;
+                padding: 0 1.5rem;
+            }
+
+            .sidebar .site-title {
+                display: none;
+            }
+
+            .mobile-site-title {
+                display: block;
+                text-align: center;
+                font-size: 1.2rem;
+                margin-bottom: 1.5rem;
+                padding-right: 3.5rem;
+                padding-left: 1rem;
+            }
+            .mobile-site-title a {
+                color: var(--text-muted);
+            }
+
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 250px;
+                height: 100vh;
+                background: var(--bg-main);
+                padding: 2rem 1.5rem;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+                z-index: 50;
+                overflow-y: auto;
+                border-right: 1px solid var(--border-color);
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+
+            .sidebar-open .sidebar {
+                transform: translateX(0);
+            }
+
+            .hamburger {
+                display: flex;
+                right: 1.5rem;
+                top: 2.6rem;
+            }
+
+            .sidebar-open .hamburger {
+                right: 1.5rem !important;
+                top: 2.6rem !important;
+            }
+
+            .sidebar-overlay.active {
+                display: block;
+                opacity: 1;
+            }
+
+            .main-content {
+                max-width: 100%;
+                padding-top: 0.5rem;
+            }
+
+            .prose p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+            .mobile-site-title {
+                font-size: 1.05rem;
+                padding-right: 3rem;
+                padding-left: 0.5rem;
+            }
+            .nav-list a {
+                font-size: 0.9rem;
+            }
+            .toggle-light {
+                font-size: 0.9rem;
+            }
+            .prose p {
+                font-size: 0.95rem;
+            }
+            .hamburger {
+                right: 1rem;
+                top: 2.2rem;
+            }
+            .sidebar-open .hamburger {
+                right: 1rem !important;
+                top: 2.2rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <canvas id="gameCanvas"></canvas>
+
+    <div class="container">
+        <nav class="sidebar" id="sidebar">
+            <div class="site-title"><a href="../">M. Saad Khan</a></div>
+
+            <ul class="nav-list">
+                <li><a href="../about">About</a></li>
+                <li><a href="../field_notes" class="active-link">Field Notes</a></li>
+                <li><a href="../longreads">Long Reads</a></li>
+                <li><a href="../research">Research</a></li>
+                <li><a href="../read_picks">Read Picks</a></li>
+                <li><a href="../rabbit-holes">Rabbit Holes</a></li>
+                <li class="has-tag"><a href="#"><span>Consultancy </span><span class="nav-tag">soon</span></a></li>
+                <li class="has-tag"><a href="tio"><span>Book <span class="nav-icon">↗</span></span></a></li>
+                <li class="has-tag"><a href="#"><span>Course <span class="nav-icon">↗</span></span><span class="nav-tag">soon</span></a></li>
+            </ul>
+
+            <hr class="divider" />
+
+            <ul class="nav-list">
+                <li><a href="https://www.linkedin.com/in/saad985/">LinkedIn <span class="nav-icon">↗</span></a></li>
+                <li><a href="https://substack.com/@saadk985">Substack <span class="nav-icon">↗</span></a></li>
+                <li><a href="mailto:msaadkhn985@gmail.com">Email <span class="nav-icon">↗</span></a></li>
+                <li><a href="https://github.com/saadk985">GitHub <span class="nav-icon">↗</span></a></li>
+            </ul>
+
+            <button class="toggle-light">
+                <span>☾</span> Toggle Dark
+            </button>
+        </nav>
+
+        <main class="main-content">
+
+<div class="mobile-topbar">
+    <a href="../" class="brand">M. Saad Khan</a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</div>
+
+        <header class="article-header">
+            <h1 class="article-h1">The Street That Stayed Still for 300 Million Years</h1>
+
+            <div class="article-meta">
+                <span>2026.11.12</span>
+                <span class="meta-dot">·</span>
+                <span>5 min read</span>
+            </div>
+        </header>
+
+            <div class="prose">
+                <p>Picture a street where nothing has changed in 300 million years. The houses are the same. So are the paint and the number of windows. A chicken could walk down it blindfolded, and so could a chimpanzee. Now imagine that, within the few million years since our lineage split from the chimps, someone quietly rebuilt 18 of those 118 houses.</p>
+                <p>That street exists. It sits near the end of chromosome 20, and it's called HAR1. Let's take a walk through it.</p>
+                
+                <h2>Boring is a compliment</h2>
+                
+                <p>There's one idea worth keeping in mind when reading a genome like this: boring DNA can be telling us something important. When a stretch of DNA looks almost identical in a chicken and a chimp, whose last common ancestor lived about 300 million years ago, it means most changes in that region haven't survived across all that evolutionary time. Something there matters. The sequence has been remarkably resistant to change.</p>
+                <p>HAR1 fits this pattern almost perfectly. Chicken and chimp differ at just 2 of its 118 letters. Humans and chimps, whose lineages separated only 6 or 7 million years ago, differ at 18 positions. That's quite a contrast. It looks less like a quiet evolutionary history and more like a construction crew suddenly arriving on the street.</p>
+                <figure>
+                    <img src="../images/fn_3.png" width="600">
+                    <figcaption>Courtesy: Claude</figcaption>
+                </figure>
+                <h2>Found by a filter, not a microscope</h2>
+                
+                <p>Nobody went looking for HAR1 with a pipette. Its discovery came from comparing genomes. In 2006, Katherine Pollard, working in David Haussler's group, had access to a freshly assembled chimp genome. She asked a straightforward question: which regions of DNA remain conserved across vertebrates but have changed unusually quickly in humans? The team ran the scan and ranked the results. One region stood out at the top. They called it Human Accelerated Region 1, or HAR1.</p>
+                <p>What I like about this discovery is how little direct observation was involved at the beginning. Nobody had watched HAR1 doing anything. Researchers saw a column in a sequence alignment where the letters looked unexpectedly different. A statistical metal detector had beeped over a patch of ground. Only then did people start digging to find out what was buried there.</p>
+                
+                <h2>What was buried there</h2>
+                
+                <p>The first surprise was that HAR1 doesn't provide instructions for making a protein. Instead, cells read it into an RNA molecule that performs its function as RNA. The second surprise came from looking at where that RNA becomes active. It switches on in Cajal-Retzius neurons of the developing brain, roughly between weeks 7 and 19 of pregnancy. These cells help arrange the layers of the cerebral cortex in the correct order.</p>
+                <p>Think about that for a moment. The region with an unusually high number of evolutionary changes turned out to be active in the very part of the developing brain where the cerebral cortex is being organised. Coincidence is possible, of course. Still, that's a rather interesting address for a sequence with such an unusual history.</p>
+                
+                <h2>Before we call it "the human gene"</h2>
+                
+                <p>Here's where we need to be careful. We still don't know what those 18 changes actually do. Predictions and laboratory experiments suggest that the human RNA folds into a slightly different shape from its chimp counterpart. Beyond that, the evidence gets thin. There's another part of the story that deserves attention. Most of the 18 changes replace an A or T with a G or C. That isn't the pattern we'd usually expect from random mutation.</p>
+                <p>A process called GC-biased gene conversion offers one possible explanation. When chromosomes exchange pieces of DNA, the repair machinery can slightly favour G and C over A and T. Those changes can then spread through a population without giving the organism any particular advantage.</p> 
+                <p>HAR1 sits toward the end of a chromosome, where recombination is busy. That location makes the explanation worth considering. Some of the rapid change could reflect natural selection favouring new biological functions. Some could come from the repair machinery quietly tipping the odds towards G and C. Researchers are still arguing about how much each process contributed.</p> 
+                
+                <h2>Why I keep going back to it</h2> 
+                
+                <p>Two decades after its discovery, we have the address but not the blueprint. We know where the sequence changed and roughly when its RNA becomes active during brain development. What we don't know is exactly what those 18 changes mean for the organism. There's something unusual about that. Everything began with a pattern in a table of letters. No visible structure. No obvious biological activity. Just a sequence that looked different from what evolution had led us to expect.</p> 
+            </div>
+
+            <footer class="site-footer">
+                <div>&copy; 2026 M. Saad Khan</div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Theme toggle (OS-aware) -->
+    <script>
+    const toggleBtn = document.querySelector('.toggle-light');
+    const body = document.body;
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+    if (initialDark) { body.classList.add('dark-mode'); toggleBtn.innerHTML = '<span>☀</span> Toggle White'; }
+    toggleBtn.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        toggleBtn.innerHTML = isDark ? '<span>☀</span> Toggle White' : '<span>☾</span> Toggle Dark';
+    });
+    </script>
+
+    <!-- Hamburger -->
+    <script>
+    const hamburger = document.getElementById('hamburgerBtn');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    function toggleSidebar(open) {
+        if (open === undefined) body.classList.toggle('sidebar-open');
+        else if (open) body.classList.add('sidebar-open');
+        else body.classList.remove('sidebar-open');
+    }
+    hamburger.addEventListener('click', (e) => { e.stopPropagation(); toggleSidebar(); });
+    overlay.addEventListener('click', () => toggleSidebar(false));
+    sidebar.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => { if (window.innerWidth <= 768) toggleSidebar(false); });
+    });
+    </script>
+
+    <!-- ── THE LATENT FORM (reading-page variant) ── -->
+    <script>
+    (function () {
+    'use strict';
+    const canvas = document.getElementById('gameCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d', { alpha: true });
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) { canvas.style.opacity = '0'; return; }
+
+    const CFG = {
+        dendriteParticles: 2200, dustParticles: 240,
+        treeDepth: 6, trunkCount: 3,
+        trunkStart: 0.10, trunkSpacing: 0.18,
+        obsRadiusBase: 0.20, mouseRadius: 165,
+        obsSpeed: 0.000155, memoryDecay: 0.990,
+        centerBias: 0.30, obsAmpX: 0.22, obsAmpY: 0.28,
+        maskStart: 0.40, maskEnd: 0.72,
+    };
+
+    let W = 0, H = 0, DPR = 1, CX = 0, CY = 0, obsRadiusBase = 220;
+    let branches = [], particles = [], dust = [], shockwaves = [];
+    let obsX = 0, obsY = 0, obsR = 200;
+    let lastT = 0, fadeIn = 0;
+
+    function resize() {
+        DPR = Math.min(window.devicePixelRatio || 1, 2);
+        W = window.innerWidth; H = window.innerHeight;
+        canvas.width = (W * DPR) | 0; canvas.height = (H * DPR) | 0;
+        canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        CX = W * CFG.centerBias; CY = H * 0.5;
+        obsRadiusBase = Math.min(W, H) * CFG.obsRadiusBase;
+        build();
+    }
+
+    function build() { buildDendrite(); buildParticles(); buildDust(); }
+
+    function buildDendrite() {
+        branches = [];
+        function grow(x, y, angle, length, depth, width, seed) {
+            const steps = Math.max(6, Math.floor(length / 7));
+            const pts = [];
+            for (let i = 0; i <= steps; i++) {
+                const t = i / steps;
+                const a = angle + Math.sin(t * Math.PI * 1.6 + seed) * 0.18;
+                pts.push({ x: x + Math.cos(a) * length * t, y: y + Math.sin(a) * length * t });
+            }
+            branches.push({ pts, width, depth });
+            const end = pts[pts.length - 1];
+            if (depth > 0) {
+                const nChildren = depth > 3 ? 2 : (Math.random() < 0.4 ? 3 : 2);
+                for (let i = 0; i < nChildren; i++) {
+                    const spread = (i - (nChildren - 1) / 2) * (0.5 + Math.random() * 0.2);
+                    const cAngle = angle + spread + (Math.random() - 0.5) * 0.25;
+                    const cLength = length * (0.64 + Math.random() * 0.16);
+                    grow(end.x, end.y, cAngle, cLength, depth - 1, width * 0.72, seed + i * 17);
+                }
+            }
+        }
+        for (let i = 0; i < CFG.trunkCount; i++) {
+            const startX = W * (CFG.trunkStart + i * CFG.trunkSpacing) + (Math.random() - 0.5) * 40;
+            const angle = -Math.PI / 2 + (i - (CFG.trunkCount - 1) / 2) * 0.32 + (Math.random() - 0.5) * 0.18;
+            const length = H * 0.30 + Math.random() * 70;
+            const width = 9 + Math.random() * 3;
+            grow(startX, H + 40, angle, length, CFG.treeDepth, width, i * 100);
+        }
+    }
+
+    function buildParticles() {
+        particles = [];
+        let totalW = 0;
+        for (const b of branches) totalW += b.width * b.width;
+        for (const br of branches) {
+            const weight = (br.width * br.width) / totalW;
+            const count = Math.max(2, Math.floor(weight * CFG.dendriteParticles));
+            for (let i = 0; i < count; i++) {
+                const t = Math.random();
+                const idx = Math.min(br.pts.length - 1, Math.floor(t * br.pts.length));
+                const pt = br.pts[idx];
+                const scatter = br.width * 0.42 + 1.4;
+                const a = Math.random() * Math.PI * 2;
+                const r = Math.sqrt(Math.random()) * scatter;
+                const hx = pt.x + Math.cos(a) * r;
+                const hy = pt.y + Math.sin(a) * r;
+                particles.push({
+                    homeX: hx, homeY: hy,
+                    x: hx + (Math.random() - 0.5) * 55, y: hy + (Math.random() - 0.5) * 55,
+                    vx: 0, vy: 0, seed: Math.random() * 1000,
+                    size: 0.4 + Math.random() * 0.9, memory: 0,
+                });
+            }
+        }
+    }
+
+    function buildDust() {
+        dust = [];
+        for (let i = 0; i < CFG.dustParticles; i++) {
+            dust.push({
+                x: Math.random() * W, y: Math.random() * H,
+                vx: (Math.random() - 0.5) * 0.12, vy: (Math.random() - 0.5) * 0.12,
+                size: 0.35 + Math.random() * 0.4,
+            });
+        }
+    }
+
+    const mouse = { x: -9999, y: -9999, active: false };
+    window.addEventListener('pointermove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; mouse.active = true; }, { passive: true });
+    window.addEventListener('pointerleave', () => { mouse.active = false; });
+    window.addEventListener('blur', () => { mouse.active = false; });
+    window.addEventListener('pointerdown', (e) => {
+        if (W > 768 && !e.target.closest('a, button')) shockwaves.push({ x: e.clientX, y: e.clientY, radius: 0, age: 0 });
+    });
+
+    function palette() {
+        const dark = document.body.classList.contains('dark-mode');
+        return dark
+            ? { base: [128, 122, 112], accent: [255, 138, 92], dustA: 0.06, ringA: 0.15 }
+            : { base: [110, 100, 90],  accent: [251, 126, 74], dustA: 0.05, ringA: 0.15 };
+    }
+
+    function frame(t) {
+        requestAnimationFrame(frame);
+        if (W <= 768) return;
+        const dt = lastT ? Math.min(t - lastT, 50) : 16;
+        lastT = t;
+        fadeIn = Math.min(1, fadeIn + 0.015);
+
+        const phase = t * CFG.obsSpeed + Math.sin(t * 0.00022) * 2.1;
+        obsX = CX + Math.cos(phase * 1.31) * (W * CFG.obsAmpX);
+        obsY = CY + Math.sin(phase * 1.73) * (H * CFG.obsAmpY);
+        obsR = obsRadiusBase * (1 + Math.sin(t * 0.0005) * 0.12);
+        const obsR2 = obsR * obsR;
+
+        const C = palette();
+        ctx.clearRect(0, 0, W, H);
+
+        const atm = ctx.createRadialGradient(obsX, obsY, 0, obsX, obsY, obsR * 1.35);
+        atm.addColorStop(0, 'rgba(251,126,74,' + (0.055 * fadeIn).toFixed(3) + ')');
+        atm.addColorStop(1, 'rgba(251,126,74,0)');
+        ctx.fillStyle = atm;
+        ctx.fillRect(obsX - obsR * 1.35, obsY - obsR * 1.35, obsR * 2.7, obsR * 2.7);
+
+        ctx.fillStyle = 'rgba(' + C.base[0] + ',' + C.base[1] + ',' + C.base[2] + ',' + (C.dustA * fadeIn).toFixed(3) + ')';
+        for (let i = 0; i < dust.length; i++) {
+            const d = dust[i];
+            d.x += d.vx; d.y += d.vy;
+            if (d.x < 0) d.x = W; else if (d.x > W) d.x = 0;
+            if (d.y < 0) d.y = H; else if (d.y > H) d.y = 0;
+            ctx.fillRect(d.x, d.y, d.size, d.size);
+        }
+
+        for (let i = shockwaves.length - 1; i >= 0; i--) {
+            const sw = shockwaves[i];
+            sw.radius += 5.5; sw.age += dt;
+            if (sw.age > 1500) shockwaves.splice(i, 1);
+        }
+
+        const mActive = mouse.active;
+        const mx = mouse.x, my = mouse.y;
+        const mouseR2 = CFG.mouseRadius * CFG.mouseRadius;
+        const swCount = shockwaves.length;
+
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            let coh = 0;
+            const dxA = p.x - obsX, dyA = p.y - obsY;
+            const dA2 = dxA * dxA + dyA * dyA;
+            if (dA2 < obsR2) { const k = 1 - Math.sqrt(dA2) / obsR; coh = k * k; }
+            if (mActive) {
+                const dxM = p.x - mx, dyM = p.y - my;
+                const dM2 = dxM * dxM + dyM * dyM;
+                if (dM2 < mouseR2) { const k = 1 - Math.sqrt(dM2) / CFG.mouseRadius; const v = k * k; if (v > coh) coh = v; }
+            }
+            for (let s = 0; s < swCount; s++) {
+                const sw = shockwaves[s];
+                const dxS = p.x - sw.x, dyS = p.y - sw.y;
+                const dS = Math.sqrt(dxS * dxS + dyS * dyS);
+                const band = Math.abs(dS - sw.radius);
+                if (band < 55) { const k = (1 - band / 55) * (1 - sw.age / 1500); if (k > coh) coh = k; }
+            }
+            p.memory = Math.max(p.memory * CFG.memoryDecay, coh);
+            const phase1 = t * 0.0008 + p.seed;
+            const noiseOffX = Math.sin(phase1) * 42 + Math.cos(phase1 * 1.7) * 20;
+            const noiseOffY = Math.cos(phase1 * 1.3) * 42 + Math.sin(phase1 * 2.1) * 20;
+            const disp = 1 - p.memory;
+            const targetX = p.homeX + noiseOffX * disp;
+            const targetY = p.homeY + noiseOffY * disp;
+            const stiffness = 0.10 + p.memory * 0.10;
+            p.vx = p.vx * 0.85 + (targetX - p.x) * stiffness;
+            p.vy = p.vy * 0.85 + (targetY - p.y) * stiffness;
+            p.x += p.vx; p.y += p.vy;
+            const m = p.memory;
+            const alpha = (0.07 + m * 0.88) * fadeIn;
+            const sz = p.size * (1 + m * 1.4);
+            const cr = (C.base[0] + (C.accent[0] - C.base[0]) * m) | 0;
+            const cg = (C.base[1] + (C.accent[1] - C.base[1]) * m) | 0;
+            const cb = (C.base[2] + (C.accent[2] - C.base[2]) * m) | 0;
+            ctx.fillStyle = 'rgba(' + cr + ',' + cg + ',' + cb + ',' + alpha.toFixed(3) + ')';
+            if (sz < 1.2) ctx.fillRect(p.x - sz * 0.5, p.y - sz * 0.5, sz, sz);
+            else { ctx.beginPath(); ctx.arc(p.x, p.y, sz, 0, Math.PI * 2); ctx.fill(); }
+        }
+
+        for (let s = 0; s < swCount; s++) {
+            const sw = shockwaves[s];
+            const o = 1 - sw.age / 1500;
+            if (o <= 0) continue;
+            ctx.strokeStyle = 'rgba(251,126,74,' + (0.35 * o * fadeIn).toFixed(3) + ')';
+            ctx.lineWidth = 1.6 * o + 0.3;
+            ctx.beginPath(); ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2); ctx.stroke();
+        }
+
+        ctx.strokeStyle = 'rgba(251,126,74,' + (C.ringA * fadeIn).toFixed(3) + ')';
+        ctx.lineWidth = 0.8; ctx.setLineDash([2, 14]);
+        ctx.beginPath(); ctx.arc(obsX, obsY, obsR, 0, Math.PI * 2); ctx.stroke();
+        if (mActive) {
+            ctx.strokeStyle = 'rgba(251,126,74,' + (C.ringA * 0.55 * fadeIn).toFixed(3) + ')';
+            ctx.lineWidth = 0.7; ctx.setLineDash([2, 12]);
+            ctx.beginPath(); ctx.arc(mx, my, CFG.mouseRadius, 0, Math.PI * 2); ctx.stroke();
+        }
+        ctx.setLineDash([]);
+
+        const startX = W * CFG.maskStart;
+        const endX = W * CFG.maskEnd;
+        const mask = ctx.createLinearGradient(0, 0, endX, 0);
+        mask.addColorStop(0, 'rgba(0,0,0,1)');
+        mask.addColorStop(Math.min(1, startX / endX), 'rgba(0,0,0,1)');
+        mask.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.globalCompositeOperation = 'destination-in';
+        ctx.fillStyle = mask; ctx.fillRect(0, 0, W, H);
+        ctx.globalCompositeOperation = 'source-over';
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+    requestAnimationFrame(frame);
+    })();
+    </script>
+
+</body>
+</html>
